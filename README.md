@@ -10,6 +10,12 @@ The skill's job isn't suggesting products. It produces a build that **fits toget
 - One `build.json` drives the 3D render, the shopping list, the cut list and the landed cost, so they can't disagree
 - A built-in library of known fit rules (IKEA BESTÅ and SEKTION, Semihandmade, Fronteriors, Pretty Pegs, built-in coolers) that grows with every build
 
+![Example build: a 55-inch coffee and wine bar, with cost, vendor count, counter height and a front view of every part](examples/coffee-wine-bar/img/hero.png)
+
+Every build comes with fit checks that show what passes and what needs attention before you buy:
+
+![Compatibility checks for the coffee and wine bar: width, counter height, cooler fit, ventilation, power, shelf load and lead time](examples/coffee-wine-bar/img/checks.png)
+
 ## Install
 
 Copy the `composable-furniture` folder into your skills directory:
