@@ -30,3 +30,7 @@ Prices and availability in the example were checked on 2026-11-12 and will drift
 - Prices and stock change; the skill re-verifies every part each time it runs.
 - Amazon listings can't be verified through web search, so the skill uses links you paste or a browser.
 - Electrical, plumbing and structural work beyond stud anchoring is flagged for a licensed pro.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
