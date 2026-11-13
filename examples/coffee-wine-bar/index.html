@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coffee + wine bar — composable build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f6f3ee;--ink:#1f1b18;--muted:#6f665e;--line:#e2dbd1;--card:#fffdf9;--accent:#8a5a36;--pass:#2f7a4f;--adapt:#b7791f;--fail:#b23b3b}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
+  h1{font:600 clamp(26px,4vw,40px)/1.1 Fraunces,Georgia,serif;margin:0 0 6px}
+  h2{font:600 22px/1.2 Fraunces,Georgia,serif;margin:40px 0 12px}
+  .sub{color:var(--muted);margin:0 0 20px}
+  .kpis{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:120px}
+  .kpi b{display:block;font-size:20px}
+  .kpi span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  .hero{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+  @media(max-width:860px){.hero{grid-template-columns:1fr}}
+  .stage{position:relative;background:linear-gradient(#efe9e1,#e6ddd2);border:1px solid var(--line);border-radius:16px;overflow:hidden;height:520px;touch-action:none}
+  @media(max-width:600px){.stage{height:420px}}
+  .stage canvas{display:block;width:100%;height:100%;cursor:grab}
+  .toolbar{position:absolute;top:10px;left:10px;display:flex;flex-wrap:wrap;gap:6px;z-index:3}
+  .toolbar button{font:500 13px Inter,sans-serif;border:1px solid var(--line);background:rgba(255,253,249,.92);border-radius:999px;padding:6px 12px;cursor:pointer;color:var(--ink)}
+  .toolbar button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .tag{position:absolute;font:600 12px Inter,sans-serif;background:rgba(31,27,24,.85);color:#fff;padding:2px 7px;border-radius:6px;pointer-events:none;transform:translate(-50%,-50%);white-space:nowrap;z-index:2}
+  .info{position:absolute;bottom:10px;left:10px;right:10px;background:rgba(255,253,249,.96);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;display:none;z-index:3}
+  .info b{font-size:14px}
+  .legend{position:absolute;bottom:10px;right:10px;background:rgba(255,253,249,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;display:none;z-index:3}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .hint{position:absolute;bottom:10px;left:12px;font-size:12px;color:var(--muted);z-index:1;pointer-events:none}
+  .side{display:flex;flex-direction:column;gap:12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .mood{display:flex;flex-direction:column;justify-content:center;min-height:200px;background:repeating-linear-gradient(45deg,#f1ebe3,#f1ebe3 10px,#ece5dc 10px,#ece5dc 20px)}
+  .mood p{margin:4px 0;color:var(--muted);font-size:13px}
+  .swatches{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .sw{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+  .sw i{width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.1)}
+  table{width:100%;min-width:640px;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13.5px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f0ebe4;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+  td.num,th.num{text-align:right;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  .tablewrap{overflow-x:auto;border-radius:12px}
+  .pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.03em}
+  .t-native{background:#e3efe7;color:#22603d}.t-certified{background:#e3ebf5;color:#29507e}.t-adaptable{background:#f8ecd6;color:#8a5a12}.t-independent{background:#eee8f4;color:#5b3f7a}
+  .r-pass{background:#e3efe7;color:var(--pass)}.r-adapt{background:#f8ecd6;color:var(--adapt)}.r-fail{background:#f6e0e0;color:var(--fail)}
+  a{color:var(--accent)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  ol.steps{margin:0;padding-left:20px}
+  ol.steps li{margin:0 0 8px}
+  .note{color:var(--muted);font-size:13px}
+  .fallback{padding:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Coffee + wine bar, 55" wall</h1>
+  <p class="sub">Bar on the left, coffee on the right. IKEA SEKTION drawers in walnut effect, olive Semihandmade panels, your TCL dual-zone cooler, and your dark peony wallpaper behind it all. Every part below was listed on its seller's site when prices were checked on <span id="checked"></span>.</p>
+  <div class="kpis" id="kpis"></div>
+
+  <div class="hero">
+    <div class="stage" id="stage">
+      <div class="toolbar">
+        <button id="b-explode">Exploded view</button>
+        <button id="b-vendor">Color by vendor</button>
+        <button id="b-clear" class="on">Machine clearance</button>
+        <button id="b-reset">Reset view</button>
+      </div>
+      <div class="hint">Drag to orbit · scroll or pinch to zoom · tap a part</div>
+      <div class="info" id="info"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div class="side">
+      <div class="card mood">
+        <b>Mood image</b>
+        <p>Not generated for this draft. When one is added, it'll be labeled: <em>approximate. The 3D model and shopping list are what you'd actually build.</em></p>
+        <div class="swatches" id="swatches"></div>
+      </div>
+      <div class="card">
+        <b>What this is designed to</b>
+        <p class="note" style="margin:6px 0 0">Built in wall to wall on 55", counter at 36", 8 ft ceiling assumed. <b>Coffee side (right):</b> three 24" drawers for pods, tea, mugs and bar tools; machine on the counter. <b>Bar side (left):</b> your 23.4" dual-zone cooler (wine one side, beer and mixers the other), Above both sides: two 54" walnut shelves, 10" deep, for two rows of bottles, glasses and mugs, lit underneath.</p>
+        <p class="note" style="margin:8px 0 0">The dashed box is the space kept clear for the espresso machine (not a part).</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Bill of materials</h2>
+  <div class="tablewrap"><table id="bom"></table></div>
+  <p class="note">Tiers: <span class="pill t-native">native</span> same IKEA system · <span class="pill t-certified">certified</span> third-party maker lists this exact frame · <span class="pill t-adaptable">adaptable</span> fits with modification · <span class="pill t-independent">independent</span> appliance or wall item, checked by dimension, doesn't join the frame.</p>
+
+  <h2>Cost summary</h2>
+  <div class="grid2">
+    <div class="tablewrap"><table id="byvendor"></table></div>
+    <div class="tablewrap"><table id="bylayer"></table></div>
+  </div>
+  <p class="note">Before shipping and tax. Not priced yet: <span id="np"></span>.</p>
+
+  <h2>Cut list</h2>
+  <div class="tablewrap"><table id="cuts"></table></div>
+
+  <h2>Compatibility checks</h2>
+  <div class="tablewrap"><table id="checks"></table></div>
+
+  <h2>Build sequence and schedule</h2>
+  <div class="grid2">
+    <div class="card">
+      <ol class="steps">
+        <li><b>Week 0:</b> order the Semihandmade olive parts (6–8 weeks). Book the electrician. Ask TCL whether the B422D vents from the front.</li>
+        <li><b>Week 0–1:</b> electrician adds a dedicated outlet behind the cooler bay.</li>
+        <li><b>About week 7:</b> order the IKEA, Target, TCL and hardware parts so they land before the olive parts.</li>
+        <li>Hang the wallpaper first, from 40" up to the ceiling, so it runs behind the shelves.</li>
+        <li>Hang the base cabinet on its suspension rail with the legs set high; check the 24¼" bay and 34½" clearance.</li>
+        <li>Fit the olive end panel at the left wall, then the scribed filler at the right.</li>
+        <li>Cut the 98" countertop into the 55" top and two 4" strips (43" + 12"). Fix the top, then the strips against the wall.</li>
+        <li>Finish the walnut shelves, then mount them into studs at 54" and 72", and the two LED bars under the lower one.</li>
+        <li>Fit pulls and toekick. Slide in the cooler, level it, let it stand 4 hours, plug it in.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <b>Tools</b>
+      <p class="note">Drill/driver, stud finder, level, track or circular saw for the countertop, wallpaper smoother and knife.</p>
+      <b>Time</b>
+      <p class="note">About 1½ days once the parts are in, plus the electrician.</p>
+      <b>Skill</b>
+      <p class="note">Intermediate. The countertop cut and scribing the filler are the fussy parts.</p>
+    </div>
+  </div>
+
+  <h2>Risks and swaps</h2>
+  <div class="grid2">
+    <div class="card">
+      <b>Risks</b>
+      <ul class="note">
+        <li><b>The cooler is the biggest unknown.</b> Its venting isn't stated anywhere I could read. If TCL says it vents from the back, it can't be enclosed and the bay needs a different unit.</li>
+        <li>Only 0.3" of height to spare over the cooler. Measure the floor for level before building.</li>
+        <li>IKEA makes no 21" or 27" drawer fronts, so 24" drawers are the widest that fit with the cooler; the leftover becomes a 6" olive filler.</li>
+        <li>The wallpaper's panel size and washability aren't on its page.</li>
+        <li>Semihandmade's small-order rules conflict; confirm the fee.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <b>Swaps</b>
+      <ul class="note">
+        <li><b>Skip the wait (cheaper):</b> drop the Semihandmade order (−$455 including the fee) and paint IKEA cover panels and trim olive yourself.</li>
+        <li><b>Cheaper shelves:</b> IKEA BERGSHULT walnut-effect shelves on brackets are far cheaper but rated 44 lb per 47¼" shelf, too little for two rows of bottles.</li>
+        <li><b>Stone counter (upgrade):</b> IKEA MÖCKLARP porcelain, ordered and installed through the store.</li>
+        <li><b>Wider still (30" drawers):</b> fits only if the cooler bay shrinks to 24", leaving almost no room for uneven walls. Not recommended.</li>
+        <li><b>Wine rack:</b> the cooler holds 20 bottles. The shelves now hold the bottles on show.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note" style="margin-top:24px">Generated from build.json, the single source of truth for this render, the shopping list and the checks.</p>
+</div>
+
+<script id="build" type="application/json">{"name": "Coffee + wine bar", "units": "cm", "region": "US", "checked_on": "2026-11-12", "wall": {"w": 139.7, "z": 0, "tolerance": 0.5, "absorbed_by": "right filler, scribed on site"}, "envelope": {"w": 139.7, "h": 243.84, "d": 65.0875}, "clearance": {"x": 24.13, "w": 40.64, "h": 45.72, "d": 40.64, "z": 25.4}, "zones": [{"id": "bar", "purpose": "left: wine/beverage cooler below"}, {"id": "coffee", "purpose": "right: drawers below, machine on the counter"}], "parts": [{"id": "frame", "layer": "structure", "name": "SEKTION/MAXIMERA base cabinet with 3 drawers, white Enköping/brown walnut effect, 24×24×30\"", "vendor": "IKEA", "sku": "194.728.39 (24×24 size)", "url": "https://www.ikea.com/us/en/p/sektion-maximera-base-cabinet-with-3-drawers-white-enkoeping-brown-walnut-effect-s19472839/", "price": 330, "qty": 1, "tier": "native", "finish": "#f2efe9", "explode": [0, 0, 0], "notes": "Frame, 3 MAXIMERA drawers and walnut-effect fronts in one item. Pods and tea / mugs / bar tools.", "dims": {"w": 60.96, "h": 76.2, "d": 60.96}, "position": {"x": 24.13, "y": 49.53, "z": 30.48}, "bom": true}, {"id": "legs", "layer": "structure", "name": "SEKTION leg for cabinet, 4½\" (2-pack)", "vendor": "IKEA", "sku": "905.560.71", "url": "https://www.ikea.com/us/en/p/sektion-leg-for-cabinet-90556071/", "price": 6, "qty": 2, "tier": "native", "finish": "#3a3a3a", "explode": [0, -15, 0], "notes": "Adjustable 3½–5⅛\"; 276 lb per leg.", "dims": {"w": 5.08, "h": 11.43, "d": 5.08}, "position": {"x": 24.13, "y": 5.71, "z": 30.48}, "instances": [[26.67, -22.86], [-26.67, -22.86], [26.67, 22.86], [-26.67, 22.86]], "shape": "cyl", "bom": true}, {"id": "front-0", "layer": "skin", "name": "(included) ENKÖPING drawer front, brown walnut effect", "vendor": "IKEA", "sku": "incl.", "url": "https://www.ikea.com/us/en/p/sektion-maximera-base-cabinet-with-3-drawers-white-enkoeping-brown-walnut-effect-s19472839/", "price": 0, "qty": 1, "tier": "native", "finish": "#5b3a24", "explode": [0, 0, 26], "notes": "", "dims": {"w": 60.66, "h": 25.1, "d": 1.91}, "position": {"x": 24.13, "y": 24.13, "z": 61.91}, "bom": false}, {"id": "pull-0", "layer": "hardware", "name": "Classic solid brass bin pull, 3\" centers, unlacquered", "vendor": "Hardwick & Sons", "sku": "3\" bin pull", "url": "https://hardwickandsons.com/collections/cabinet-hardware/products/classic-solid-brass-bin-pull-3-on-centers", "price": 10.99, "qty": 1, "tier": "adaptable", "finish": "#c9a256", "explode": [0, 0, 30], "notes": "Drill two holes per front on 3\" centers. Price is 'from'.", "dims": {"w": 7.62, "h": 2.79, "d": 1.91}, "position": {"x": 24.13, "y": 34.01, "z": 63.82}, "bom": true}, {"id": "front-1", "layer": "skin", "name": "(included) ENKÖPING drawer front, brown walnut effect", "vendor": "IKEA", "sku": "incl.", "url": "https://www.ikea.com/us/en/p/sektion-maximera-base-cabinet-with-3-drawers-white-enkoeping-brown-walnut-effect-s19472839/", "price": 0, "qty": 1, "tier": "native", "finish": "#5b3a24", "explode": [0, 0, 36], "notes": "", "dims": {"w": 60.66, "h": 25.1, "d": 1.91}, "position": {"x": 24.13, "y": 49.53, "z": 61.91}, "bom": false}, {"id": "pull-1", "layer": "hardware", "name": "Classic solid brass bin pull, 3\" centers, unlacquered", "vendor": "Hardwick & Sons", "sku": "3\" bin pull", "url": "https://hardwickandsons.com/collections/cabinet-hardware/products/classic-solid-brass-bin-pull-3-on-centers", "price": 10.99, "qty": 1, "tier": "adaptable", "finish": "#c9a256", "explode": [0, 0, 40], "notes": "", "dims": {"w": 7.62, "h": 2.79, "d": 1.91}, "position": {"x": 24.13, "y": 59.41, "z": 63.82}, "bom": true}, {"id": "front-2", "layer": "skin", "name": "(included) ENKÖPING drawer front, brown walnut effect", "vendor": "IKEA", "sku": "incl.", "url": "https://www.ikea.com/us/en/p/sektion-maximera-base-cabinet-with-3-drawers-white-enkoeping-brown-walnut-effect-s19472839/", "price": 0, "qty": 1, "tier": "native", "finish": "#5b3a24", "explode": [0, 0, 46], "notes": "", "dims": {"w": 60.66, "h": 25.1, "d": 1.91}, "position": {"x": 24.13, "y": 74.93, "z": 61.91}, "bom": false}, {"id": "pull-2", "layer": "hardware", "name": "Classic solid brass bin pull, 3\" centers, unlacquered", "vendor": "Hardwick & Sons", "sku": "3\" bin pull", "url": "https://hardwickandsons.com/collections/cabinet-hardware/products/classic-solid-brass-bin-pull-3-on-centers", "price": 10.99, "qty": 1, "tier": "adaptable", "finish": "#c9a256", "explode": [0, 0, 50], "notes": "", "dims": {"w": 7.62, "h": 2.79, "d": 1.91}, "position": {"x": 24.13, "y": 84.81, "z": 63.82}, "bom": true}, {"id": "filler", "layer": "skin", "name": "Custom painted slab trim for SEKTION (olive), ripped to ~6\" filler", "vendor": "Semihandmade", "sku": "custom painted trim", "url": "https://semihandmade.com/products/custom-painted-slab-trim-for-sektion", "price": 60, "qty": 1, "tier": "certified", "finish": "#5f6448", "explode": [14, 0, 10], "notes": "Scribed to the right wall; absorbs the ½\" wall tolerance. 6–8 week lead.", "dims": {"w": 15.24, "h": 76.2, "d": 1.91}, "position": {"x": 62.23, "y": 49.53, "z": 61.91}, "bom": true}, {"id": "endpanel", "layer": "skin", "name": "Custom painted slab cover panel for SEKTION, 26×36\" (olive), cut to 34½×25½\"", "vendor": "Semihandmade", "sku": "custom painted slab", "url": "https://semihandmade.com/products/custom-painted-slab-cover-panels-for-sektion", "price": 159, "qty": 1, "tier": "certified", "finish": "#5f6448", "explode": [-16, 0, 0], "notes": "Carries the counter on the fridge side. 8-week lead.", "dims": {"w": 1.91, "h": 87.63, "d": 64.77}, "position": {"x": -68.9, "y": 43.81, "z": 32.38}, "bom": true}, {"id": "toekick", "layer": "skin", "name": "Custom painted slab toekick for SEKTION (olive), 5×93\", cut to 30\"", "vendor": "Semihandmade", "sku": "custom painted toekick", "url": "https://semihandmade.com/products/custom-painted-slab-toekick-for-sektion", "price": 136, "qty": 1, "tier": "certified", "finish": "#5f6448", "explode": [0, -12, 14], "notes": "Under the drawers only; the fridge has its own grille.", "dims": {"w": 76.2, "h": 11.43, "d": 1.91}, "position": {"x": 31.75, "y": 5.71, "z": 54.29}, "bom": true}, {"id": "smhfee", "layer": "skin", "name": "Semihandmade small-order fee (painted order under $700)", "vendor": "Semihandmade", "sku": "fee", "url": "https://www.semihandmade.com/products/custom-painted-beaded-door-for-sektion", "price": 100, "qty": 1, "tier": "certified", "finish": "", "explode": [0, 0, 0], "notes": "Their pages conflict ($100 fee vs. $700 minimum). Confirm before ordering.", "dims": {"w": 0, "h": 0, "d": 0}, "position": {"x": 0, "y": 0, "z": 0}, "hidden": true, "bom": true}, {"id": "top", "layer": "surface", "name": "SÄLJAN countertop, dark gray stone effect/laminate, 98×1½\"", "vendor": "IKEA", "sku": "see listing", "url": "https://www.ikea.com/us/en/cat/kitchen-countertops-24264/f/black-kitchen-worktops-co003/", "price": 149, "qty": 1, "tier": "native", "finish": "#2f2b29", "explode": [0, 26, 0], "notes": "One 98\" length gives the 55\" top plus the backsplash strips.", "dims": {"w": 139.7, "h": 3.81, "d": 65.09}, "position": {"x": 0.0, "y": 89.53, "z": 32.54}, "bom": true}, {"id": "splash", "layer": "surface", "name": "(cut from countertop) 4\" backsplash strip, 43\" piece", "vendor": "IKEA", "sku": "incl.", "url": "", "price": 0, "qty": 1, "tier": "native", "finish": "#2f2b29", "explode": [0, 30, -1], "notes": "Protects the wallpaper from coffee and cocktail splash.", "dims": {"w": 109.22, "h": 10.16, "d": 3.81}, "position": {"x": 15.24, "y": 96.52, "z": 1.91}, "bom": false}, {"id": "splash2", "layer": "surface", "name": "(cut from countertop) 4\" backsplash strip, 12\" piece", "vendor": "IKEA", "sku": "incl.", "url": "", "price": 0, "qty": 1, "tier": "native", "finish": "#2f2b29", "explode": [0, 30, -1], "notes": "Butt-joined to the long piece above the cooler.", "dims": {"w": 30.48, "h": 10.16, "d": 3.81}, "position": {"x": -54.61, "y": 96.52, "z": 1.91}, "bom": false}, {"id": "fridge", "layer": "appliance", "name": "TCL B422D 23.4\" dual-zone wine & beverage cooler, 20 bottles / 78 cans", "vendor": "Lowe's", "sku": "B422D", "url": "https://www.lowes.com/pd/TCL-23-4-in-W-20-Bottles-Stainless-Steel-Dual-Zone-Cooling-Built-in-Freestanding-Indoor-Wine-Cooler/5017343139", "price": 395, "qty": 1, "tier": "independent", "finish": "#1c1c1e", "explode": [0, 0, 34], "notes": "23.4\"W × 34.2\"H × 22.5\"D (24.4\" with handle). Wine zone 40–66°F, beverage zone 38–66°F. $395 at Lowe's as you saw it (TCL lists it at $799). Hinge the door on the wall side so it opens toward the drawers; confirm the door is reversible.", "dims": {"w": 59.44, "h": 86.87, "d": 57.15}, "position": {"x": -37.15, "y": 43.43, "z": 31.12}, "glass": true, "bom": true}, {"id": "paper", "layer": "finish", "name": "Astoria Grand Dark Moody Peony floral wall mural (peel-and-stick or non-woven)", "vendor": "Wayfair", "sku": "W122986766", "url": "https://www.wayfair.com/Astoria-Grand--Dark-Moody-Peony-Floral-Wall-Mural-%7C-Vintage-Botanical-Wallpaper-%7C-NonWoven-or-Peel-and-Stick-X233097877-L6161-K~W122986766.html", "price": 25.99, "qty": 1, "tier": "independent", "finish": "#3a2a2f", "explode": [0, 0, -2], "notes": "Size not shown on the page; you need to cover 55\"W × 56\"H. Confirm the panel size before ordering.", "dims": {"w": 139.7, "h": 142.24, "d": 0.25}, "position": {"x": 0.0, "y": 172.72, "z": 0.13}, "bom": true}, {"id": "shelf-lo", "layer": "fixtures", "name": "Omega National (Rev-A-Shelf) walnut floating shelf, 54×10×2½\", concealed bracket", "vendor": "Würth Louis and Company", "sku": "FS0154EUF1", "url": "https://wurthlac.com/product/374222/54-2-5-10-Floating-Shelf-Walnut", "price": 246.6, "qty": 1, "tier": "independent", "finish": "#4f3423", "explode": [0, 14, 16], "notes": "Solid walnut, arrives sanded and unfinished. Rated 15 lb per running foot (about 67 lb on 54\"). 10\" deep: two rows of standard 750 ml bottles.", "bom": true, "dims": {"w": 137.16, "h": 6.35, "d": 25.4}, "position": {"x": 0.0, "y": 140.34, "z": 12.95}}, {"id": "shelf-hi", "layer": "fixtures", "name": "Omega National (Rev-A-Shelf) walnut floating shelf, 54×10×2½\", concealed bracket", "vendor": "Würth Louis and Company", "sku": "FS0154EUF1", "url": "https://wurthlac.com/product/374222/54-2-5-10-Floating-Shelf-Walnut", "price": 246.6, "qty": 1, "tier": "independent", "finish": "#4f3423", "explode": [0, 24, 16], "notes": "", "bom": true, "dims": {"w": 137.16, "h": 6.35, "d": 25.4}, "position": {"x": 0.0, "y": 186.06, "z": 12.95}}, {"id": "led-0", "layer": "fixtures", "name": "Good Earth Lighting 24\" plug-in LED bar, 2980K", "vendor": "Good Earth Lighting", "sku": "UC1139-WHG-24LF0-G", "url": "https://angelesmillwork.com/products/plumbing-electrical/indoor-outdoor-light-fixtures/under-cabinet-fixtures/502622-good-earth-lighting-24-in-plug-in-white-led-under-cabinet-light-bar", "price": 29.49, "qty": 1, "tier": "independent", "finish": "#fff3d6", "explode": [0, 8, 16], "notes": "ETL/UL listed, plug-in. One over each side.", "bom": true, "dims": {"w": 60.96, "h": 2.03, "d": 2.03}, "position": {"x": -30.48, "y": 136.14, "z": 11.18}}, {"id": "led-1", "layer": "fixtures", "name": "Good Earth Lighting 24\" plug-in LED bar, 2980K", "vendor": "Good Earth Lighting", "sku": "UC1139-WHG-24LF0-G", "url": "https://angelesmillwork.com/products/plumbing-electrical/indoor-outdoor-light-fixtures/under-cabinet-fixtures/502622-good-earth-lighting-24-in-plug-in-white-led-under-cabinet-light-bar", "price": 29.49, "qty": 1, "tier": "independent", "finish": "#fff3d6", "explode": [0, 8, 16], "notes": "", "bom": true, "dims": {"w": 60.96, "h": 2.03, "d": 2.03}, "position": {"x": 33.02, "y": 136.14, "z": 11.18}}], "cuts": [{"part": "SÄLJAN 98\" countertop", "from": "98 × 25⅝\"", "to": "55\" top (scribe to both walls) + 43\" offcut", "tool": "Circular or track saw", "by": "user"}, {"part": "Countertop offcut", "from": "43 × 25⅝\"", "to": "two 4\" strips: 43\" and 12\" (joined above the cooler)", "tool": "Table or track saw", "by": "user"}, {"part": "Semihandmade trim", "from": "trim stock", "to": "≈6 × 30\" filler, scribed to the wall", "tool": "Track saw + scribe", "by": "user"}, {"part": "Semihandmade cover panel", "from": "26 × 36\"", "to": "25½ × 34½\"", "tool": "Track saw", "by": "user"}, {"part": "Semihandmade toekick", "from": "5 × 93\"", "to": "5 × 30\"", "tool": "Miter or track saw", "by": "user"}, {"part": "Drawer fronts (×3)", "from": "undrilled", "to": "2 holes each, 3\" centers", "tool": "Drill + jig", "by": "user"}, {"part": "Wallpaper", "from": "panel(s)", "to": "55 × 56\" above the strip", "tool": "Knife + smoother", "by": "user"}, {"part": "Walnut shelves (×2)", "from": "sanded, unfinished", "to": "finished with oil or poly before hanging", "tool": "Rag or brush", "by": "user"}], "services": [{"trade": "Electrician", "task": "Dedicated 15A outlet for the cooler (TCL requires it), and check the espresso machine's circuit", "estimate": null}], "not_priced": ["Electrician (dedicated outlet)", "SEKTION suspension rails for the base and wall cabinets", "Oil or polyurethane finish for the two unfinished walnut shelves", "Screws, anchors and wallpaper smoother", "A second wallpaper panel if one doesn't cover 55 × 56\""], "checks": [{"joint": "Width", "check": "Fits 55\" wall with tolerance", "result": "pass", "note": "¾\" end panel + 24¼\" cooler bay + 24\" drawers + filler ≈6\" = 55\", left to right. The filler is scribed to the right wall, absorbing ½\" if the walls aren't square."}, {"joint": "Stack-up", "check": "Counter height", "result": "pass", "note": "4½\" legs + 30\" cabinet + 1½\" top = 36\"."}, {"joint": "Cooler → bay", "check": "Width", "result": "pass", "note": "Bay 24¼\" for a 23.4\" unit: about ⅜\" each side."}, {"joint": "Cooler → bay", "check": "Height", "result": "adapt", "note": "Bay is 34½\" under the counter; the cooler is 34.2\". Only 0.3\" spare, so set the cabinet legs high and the cooler's leveling feet low."}, {"joint": "Cooler", "check": "Ventilation", "result": "adapt", "note": "Sold as built-in capable, but neither the listing nor the manual says where it vents. Confirm front venting with TCL before enclosing it; a rear-venting cooler would overheat here."}, {"joint": "Cooler door", "check": "Swing", "result": "adapt", "note": "With the cooler against the left wall, hinge it on the wall side so it opens toward the drawers. The manual doesn't describe reversing the door, so confirm with TCL."}, {"joint": "Cooler", "check": "Power", "result": "adapt", "note": "TCL's manual requires its own dedicated 15A outlet; no power strips. Have an electrician add one, and keep the espresso machine on a separate circuit."}, {"joint": "Drawers", "check": "Fit", "result": "pass", "note": "Complete IKEA unit (frame, drawers, fronts)."}, {"joint": "Upper layout", "check": "Shelf clearance", "result": "pass", "note": "Two 54\" shelves span the wall with ½\" clear at each end, so uneven walls won't bind them."}, {"joint": "Shelves", "check": "Load", "result": "adapt", "note": "Rated 15 lb/ft, about 67 lb per shelf. A full 750 ml bottle is roughly 3 lb, so that is about 22 bottles per shelf: two rows of ~11, spaced across the 54\". Packed edge to edge, two rows would exceed the rating. Each bracket must hit studs."}, {"joint": "Bottles", "check": "Height and depth", "result": "pass", "note": "15½\" clear between shelves for tall bottles. 10\" depth fits two rows of standard 750 ml bottles; 1.75 L handles fit one row."}, {"joint": "Machine", "check": "Clearance", "result": "pass", "note": "18\" from the counter to the lower shelf."}, {"joint": "Wallpaper", "check": "Splash and moisture", "result": "adapt", "note": "A 4\" strip cut from the countertop protects the bottom edge. The listing doesn't say the paper is washable."}, {"joint": "Wallpaper", "check": "Quantity", "result": "adapt", "note": "The panel size isn't listed. Confirm one panel covers 55 × 56\" (assumes an 8 ft ceiling)."}, {"joint": "Schedule", "check": "Lead time", "result": "adapt", "note": "Semihandmade painted parts take 6–8 weeks; everything else ships in days."}]}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+const B = JSON.parse(document.getElementById('build').textContent);
+const fmt = n => '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}).replace(/\.00$/,'');
+const cmIn = cm => {const i = cm/2.54; let w = Math.floor(i); let f = Math.round((i-w)*8); if(f===8){w++;f=0;} if(!f) return w+'"'; let d=8; while(f%2===0){f/=2;d/=2;} return (w?w+' ':'')+f+'/'+d+'"';};
+const vendorColors = {"IKEA":"#0058a3","Target":"#cc0000","Good Earth Lighting":"#e0a800","Semihandmade":"#2f8f5b","Hardwick & Sons":"#b5651d","Summit (via Howdy Brewer)":"#7b4bb7","Home Depot":"#f96302","Lowe's":"#0b4f8a","Walmart":"#ffc220","Wayfair":"#7f187f","Würth Louis and Company":"#8b1d1d"};
+document.getElementById('cuts').innerHTML='<tr><th>Part</th><th>From</th><th>To</th><th>Tool</th><th>By</th></tr>'+(B.cuts||[]).map(c=>`<tr><td>${c.part}</td><td>${c.from}</td><td>${c.to}</td><td>${c.tool}</td><td>${c.by}</td></tr>`).join('');
+document.getElementById('np').textContent=(B.not_priced||[]).join('; ');
+document.getElementById('checked').textContent = new Date(B.checked_on+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+
+// ---- money ----
+const lines = []; const seen = {};
+B.parts.filter(p=>p.bom!==false).forEach(p => { const k = p.sku+'|'+p.name; if(seen[k]){seen[k].qty += p.qty;} else {seen[k] = Object.assign({},p); lines.push(seen[k]);} });
+const total = lines.reduce((s,p)=>s+p.price*p.qty,0);
+const nParts = lines.filter(p=>p.sku!=='fee').reduce((s,p)=>s+p.qty,0);
+const vendors = [...new Set(lines.map(p=>p.vendor))];
+const topY = Math.max(...B.parts.filter(p=>p.id==='top').map(p=>p.position.y+p.dims.h/2));
+document.getElementById('kpis').innerHTML =
+  [[fmt(total),'Total, before tax'],[vendors.length,'Vendors'],[nParts,'Items to buy'],[cmIn(topY),'Counter height'],[cmIn(B.envelope.w)+' W','Footprint']]
+  .map(([b,s])=>`<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+
+document.getElementById('bom').innerHTML = '<tr><th>Layer</th><th>Part</th><th>Vendor · SKU</th><th>Size</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Line</th><th>Tier</th></tr>' +
+  lines.map(p=>`<tr><td>${p.layer}</td><td><a href="${p.url}">${p.name}</a>${p.notes?`<div class="note">${p.notes}</div>`:''}</td><td>${p.vendor}<div class="note">${p.sku}</div></td><td>${p.dims.w?cmIn(p.dims.w)+' × '+cmIn(p.dims.d)+' × '+cmIn(p.dims.h):'—'}</td><td class="num">${p.qty}</td><td class="num">${fmt(p.price)}</td><td class="num">${fmt(p.price*p.qty)}</td><td><span class="pill t-${p.tier}">${p.tier}</span></td></tr>`).join('') +
+  `<tr><td colspan="6"><b>Total</b></td><td class="num"><b>${fmt(total)}</b></td><td></td></tr>`;
+
+function sumBy(key){const m={}; lines.forEach(p=>m[p[key]]=(m[p[key]]||0)+p.price*p.qty); return m;}
+function sumTable(id,title,m){document.getElementById(id).innerHTML=`<tr><th>${title}</th><th class="num">Cost</th><th class="num">Share</th></tr>`+Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<tr><td>${k}</td><td class="num">${fmt(v)}</td><td class="num">${Math.round(v/total*100)}%</td></tr>`).join('');}
+sumTable('byvendor','By vendor',sumBy('vendor'));
+sumTable('bylayer','By layer',sumBy('layer'));
+
+document.getElementById('checks').innerHTML='<tr><th>Joint</th><th>Check</th><th>Result</th><th>Note</th></tr>'+B.checks.map(c=>`<tr><td>${c.joint}</td><td>${c.check}</td><td><span class="pill r-${c.result}">${c.result}</span></td><td>${c.note}</td></tr>`).join('');
+
+const fin = [...new Map(B.parts.filter(p=>p.finish&&!p.hidden).map(p=>[p.finish,p])).values()];
+document.getElementById('swatches').innerHTML = fin.map(p=>`<span class="sw"><i style="background:${p.finish}"></i>${p.name.split(',')[0].replace(/ \(.*$/,'')}</span>`).join('');
+
+// ---- 3D ----
+const stage = document.getElementById('stage');
+if(!window.THREE){ fallbackSVG(); return; }
+let renderer;
+try { renderer = new THREE.WebGLRenderer({antialias:true}); } catch(e){ fallbackSVG(); return; }
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+stage.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(35,1,1,5000);
+scene.add(new THREE.HemisphereLight(0xfff8ee,0xb8a99a,0.75));
+const sun = new THREE.DirectionalLight(0xffffff,0.75); sun.position.set(160,260,240); sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048); Object.assign(sun.shadow.camera,{left:-200,right:200,top:250,bottom:-50,near:10,far:800});
+sun.shadow.camera.updateProjectionMatrix(); scene.add(sun);
+// floor + wall (context, not parts)
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(600,400), new THREE.MeshStandardMaterial({color:0xd9cfc2,roughness:.95}));
+floor.rotation.x=-Math.PI/2; floor.receiveShadow=true; scene.add(floor);
+const wall = new THREE.Mesh(new THREE.PlaneGeometry(600,300), new THREE.MeshStandardMaterial({color:0xeee8e0,roughness:1}));
+wall.position.set(0,150,(B.wall?B.wall.z:-20)-0.2); wall.receiveShadow=true; scene.add(wall);
+
+const meshes = [];
+function mat(hex,p){ const metal=p.id.startsWith('pull'); const m = new THREE.MeshStandardMaterial({color:hex,roughness:metal?0.3:(p.id==='tile'?0.25:0.65),metalness:metal?0.8:0.05}); if(p.id==='led'){m.emissive=new THREE.Color(0xffe2a8);m.emissiveIntensity=.9;} return m; }
+B.parts.filter(p=>!p.hidden).forEach(p=>{
+  const inst = p.instances || [[0,0]];
+  inst.forEach(([dx,dz])=>{
+    let geo;
+    if(p.shape==='cyl'||p.id==='legs') geo = new THREE.CylinderGeometry(p.dims.w/2,p.dims.w/2*0.85,p.dims.h,24);
+    else geo = new THREE.BoxGeometry(p.dims.w,p.dims.h,p.dims.d);
+    const m = new THREE.Mesh(geo, mat(p.finish,p));
+    const base = new THREE.Vector3(p.position.x+dx,p.position.y,p.position.z+dz);
+    m.position.copy(base); m.castShadow=true; m.receiveShadow=true;
+    m.userData = {part:p, base, ex:new THREE.Vector3(...p.explode)};
+    scene.add(m); meshes.push(m);
+    if(p.id==='frame'){ // show the open cabinet interior edge & shelf lines subtly
+      const e = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({color:0x000000,transparent:true,opacity:.25}));
+      m.add(e);
+    }
+    if(p.id.startsWith('door')||p.id.startsWith('front')){ // push-open: no handles; draw a faint seam
+      const e = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({color:0x000000,transparent:true,opacity:.35}));
+      m.add(e);
+    }
+    if(p.glass){ const g=new THREE.Mesh(new THREE.BoxGeometry(p.dims.w*0.86,p.dims.h*0.78,0.3),new THREE.MeshStandardMaterial({color:0x3a3f44,roughness:.1,metalness:.3,transparent:true,opacity:.85}));
+      g.position.set(0,p.dims.h*0.05,p.dims.d/2+0.2); m.add(g);
+      const fr=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(p.dims.w*0.94,p.dims.h*0.86,0.5)),new THREE.LineBasicMaterial({color:0xcfd3d6})); fr.position.copy(g.position); m.add(fr); }
+  });
+});
+// machine clearance envelope (not a part)
+const C=B.clearance||{x:-22,w:40,h:45.7,d:38,z:0.95};
+const clr = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(C.w,C.h,C.d)), new THREE.LineDashedMaterial({color:0x8a5a36,dashSize:3,gapSize:2}));
+clr.computeLineDistances(); clr.position.set(C.x,topY+C.h/2,C.z); scene.add(clr);
+
+// labels
+const tags=[];
+function tag(text,pos){const d=document.createElement('div');d.className='tag';d.textContent=text;stage.appendChild(d);tags.push({d,pos});}
+tag(cmIn(B.envelope.w)+' wall', new THREE.Vector3(0,2,B.envelope.d+8));
+tag('Counter '+cmIn(topY), new THREE.Vector3(B.envelope.w/2+12,topY,B.envelope.d-6));
+tag(cmIn(C.h)+' clearance', new THREE.Vector3(C.x,topY+C.h/2,C.z+C.d/2+4));
+tag('Cooler bay 24¼"', new THREE.Vector3(-37,50,B.envelope.d+6));
+
+// camera orbit
+const target = new THREE.Vector3(0,B.envelope.h/2,B.envelope.d/3);
+let th=0.5, ph=1.32, r=Math.max(430,B.envelope.h*2.6); const home=[th,ph,r];
+function place(){ camera.position.set(target.x+r*Math.sin(ph)*Math.sin(th), target.y+r*Math.cos(ph), target.z+r*Math.sin(ph)*Math.cos(th)); camera.lookAt(target); }
+function resize(){ const w=stage.clientWidth,h=stage.clientHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+window.addEventListener('resize',resize); resize(); place();
+const ptrs=new Map(); let pinch0=0, moved=0;
+renderer.domElement.addEventListener('pointerdown',e=>{ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});moved=0;renderer.domElement.setPointerCapture(e.pointerId);});
+renderer.domElement.addEventListener('pointermove',e=>{ if(!ptrs.has(e.pointerId))return; const p=ptrs.get(e.pointerId); const dx=e.clientX-p.x, dy=e.clientY-p.y; ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(ptrs.size===1){ th-=dx*0.008; ph=Math.min(1.52,Math.max(0.25,ph-dy*0.006)); moved+=Math.abs(dx)+Math.abs(dy); }
+  else if(ptrs.size===2){ const [a,b]=[...ptrs.values()]; const d=Math.hypot(a.x-b.x,a.y-b.y); if(pinch0) r=Math.min(1100,Math.max(160,r*pinch0/d)); pinch0=d; moved+=10; }
+  place(); });
+function up(e){ if(ptrs.size===1 && moved<6) pick(e); ptrs.delete(e.pointerId); if(ptrs.size<2) pinch0=0; }
+renderer.domElement.addEventListener('pointerup',up); renderer.domElement.addEventListener('pointercancel',e=>{ptrs.delete(e.pointerId);pinch0=0;});
+renderer.domElement.addEventListener('wheel',e=>{e.preventDefault(); r=Math.min(1100,Math.max(160,r*(1+e.deltaY*0.001))); place();},{passive:false});
+
+const ray=new THREE.Raycaster(), info=document.getElementById('info'); let sel=null;
+function pick(e){ const rect=renderer.domElement.getBoundingClientRect(); ray.setFromCamera({x:((e.clientX-rect.left)/rect.width)*2-1,y:-((e.clientY-rect.top)/rect.height)*2+1},camera);
+  const hit=ray.intersectObjects(meshes,false)[0];
+  if(sel){ sel.material.emissive && sel.userData.part.id!=='led' && sel.material.emissive.setHex(0); sel=null; }
+  if(!hit){ info.style.display='none'; return; }
+  sel=hit.object; if(sel.userData.part.id!=='led') sel.material.emissive.setHex(0x332211);
+  const p=sel.userData.part;
+  info.innerHTML=`<b>${p.name}</b><br>${p.vendor} · ${p.sku} · ${fmt(p.price)}${p.qty>1?' × '+p.qty:''} · <span class="pill t-${p.tier}">${p.tier}</span>${p.notes?'<br><span class="note">'+p.notes+'</span>':''}<br><a href="${p.url}">Product page</a>`;
+  info.style.display='block'; }
+
+// toggles
+let exploded=0, exTarget=0, byVendor=false;
+const bEx=document.getElementById('b-explode'), bV=document.getElementById('b-vendor'), bC=document.getElementById('b-clear'), legend=document.getElementById('legend');
+bEx.onclick=()=>{exTarget=exTarget?0:1; bEx.classList.toggle('on',!!exTarget);};
+bV.onclick=()=>{byVendor=!byVendor; bV.classList.toggle('on',byVendor);
+  meshes.forEach(m=>m.material.color.set(byVendor?(vendorColors[m.userData.part.vendor]||'#888'):m.userData.part.finish));
+  legend.style.display=byVendor?'block':'none'; };
+legend.innerHTML=vendors.map(v=>`<div><i style="background:${vendorColors[v]}"></i>${v}</div>`).join('');
+bC.onclick=()=>{clr.visible=!clr.visible; bC.classList.toggle('on',clr.visible); tags[2].d.style.display=clr.visible?'':'none';};
+document.getElementById('b-reset').onclick=()=>{[th,ph,r]=home; place();};
+
+const v=new THREE.Vector3();
+(function loop(){
+  exploded += (exTarget-exploded)*0.12;
+  meshes.forEach(m=>m.position.copy(m.userData.base).addScaledVector(m.userData.ex,exploded));
+  renderer.render(scene,camera);
+  const w=stage.clientWidth,h=stage.clientHeight;
+  tags.forEach(t=>{ v.copy(t.pos).project(camera); t.d.style.left=((v.x+1)/2*w)+'px'; t.d.style.top=((1-v.y)/2*h)+'px'; t.d.style.opacity = exploded>0.5?0:1; });
+  requestAnimationFrame(loop);
+})();
+
+function fallbackSVG(){
+  // front elevation from the same parts
+  const parts=B.parts.filter(p=>!p.hidden).sort((a,b)=>(a.position.z+a.dims.d/2)-(b.position.z+b.dims.d/2)), W=B.envelope.w+60, H=B.envelope.h+20;
+  let s=`<svg viewBox="${-W/2} ${-H} ${W} ${H+10}" width="100%" height="100%" style="background:#efe9e1"><g transform="scale(1,-1)">`;
+  parts.forEach(p=>{ (p.instances||[[0,0]]).forEach(([dx])=>{ const x=p.position.x+dx-p.dims.w/2, y=p.position.y-p.dims.h/2; s+=`<rect x="${x}" y="${y}" width="${p.dims.w}" height="${p.dims.h}" fill="${p.finish}" stroke="#0003" stroke-width=".4"/>`; }); });
+  s+='</g></svg>';
+  stage.insertAdjacentHTML('beforeend',`<div class="fallback" style="height:100%">${s}</div>`);
+  stage.querySelector('.toolbar').style.display='none';
+  stage.querySelector('.hint').textContent='Front view (3D couldn’t load in this viewer)';
+}
+})();
+</script>
+</body>
+</html>

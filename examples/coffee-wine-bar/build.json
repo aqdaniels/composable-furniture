@@ -1,0 +1,830 @@
+{
+ "name": "Coffee + wine bar",
+ "units": "cm",
+ "region": "US",
+ "checked_on": "2026-11-12",
+ "wall": {
+  "w": 139.7,
+  "z": 0,
+  "tolerance": 0.5,
+  "absorbed_by": "right filler, scribed on site"
+ },
+ "envelope": {
+  "w": 139.7,
+  "h": 243.84,
+  "d": 65.0875
+ },
+ "clearance": {
+  "x": 24.13,
+  "w": 40.64,
+  "h": 45.72,
+  "d": 40.64,
+  "z": 25.4
+ },
+ "zones": [
+  {
+   "id": "bar",
+   "purpose": "left: wine/beverage cooler below"
+  },
+  {
+   "id": "coffee",
+   "purpose": "right: drawers below, machine on the counter"
+  }
+ ],
+ "parts": [
+  {
+   "id": "frame",
+   "layer": "structure",
+   "name": "SEKTION/MAXIMERA base cabinet with 3 drawers, white Enköping/brown walnut effect, 24×24×30\"",
+   "vendor": "IKEA",
+   "sku": "194.728.39 (24×24 size)",
+   "url": "https://www.ikea.com/us/en/p/sektion-maximera-base-cabinet-with-3-drawers-white-enkoeping-brown-walnut-effect-s19472839/",
+   "price": 330,
+   "qty": 1,
+   "tier": "native",
+   "finish": "#f2efe9",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "notes": "Frame, 3 MAXIMERA drawers and walnut-effect fronts in one item. Pods and tea / mugs / bar tools.",
+   "dims": {
+    "w": 60.96,
+    "h": 76.2,
+    "d": 60.96
+   },
+   "position": {
+    "x": 24.13,
+    "y": 49.53,
+    "z": 30.48
+   },
+   "bom": true
+  },
+  {
+   "id": "legs",
+   "layer": "structure",
+   "name": "SEKTION leg for cabinet, 4½\" (2-pack)",
+   "vendor": "IKEA",
+   "sku": "905.560.71",
+   "url": "https://www.ikea.com/us/en/p/sektion-leg-for-cabinet-90556071/",
+   "price": 6,
+   "qty": 2,
+   "tier": "native",
+   "finish": "#3a3a3a",
+   "explode": [
+    0,
+    -15,
+    0
+   ],
+   "notes": "Adjustable 3½–5⅛\"; 276 lb per leg.",
+   "dims": {
+    "w": 5.08,
+    "h": 11.43,
+    "d": 5.08
+   },
+   "position": {
+    "x": 24.13,
+    "y": 5.71,
+    "z": 30.48
+   },
+   "instances": [
+    [
+     26.67,
+     -22.86
+    ],
+    [
+     -26.67,
+     -22.86
+    ],
+    [
+     26.67,
+     22.86
+    ],
+    [
+     -26.67,
+     22.86
+    ]
+   ],
+   "shape": "cyl",
+   "bom": true
+  },
+  {
+   "id": "front-0",
+   "layer": "skin",
+   "name": "(included) ENKÖPING drawer front, brown walnut effect",
+   "vendor": "IKEA",
+   "sku": "incl.",
+   "url": "https://www.ikea.com/us/en/p/sektion-maximera-base-cabinet-with-3-drawers-white-enkoeping-brown-walnut-effect-s19472839/",
+   "price": 0,
+   "qty": 1,
+   "tier": "native",
+   "finish": "#5b3a24",
+   "explode": [
+    0,
+    0,
+    26
+   ],
+   "notes": "",
+   "dims": {
+    "w": 60.66,
+    "h": 25.1,
+    "d": 1.91
+   },
+   "position": {
+    "x": 24.13,
+    "y": 24.13,
+    "z": 61.91
+   },
+   "bom": false
+  },
+  {
+   "id": "pull-0",
+   "layer": "hardware",
+   "name": "Classic solid brass bin pull, 3\" centers, unlacquered",
+   "vendor": "Hardwick & Sons",
+   "sku": "3\" bin pull",
+   "url": "https://hardwickandsons.com/collections/cabinet-hardware/products/classic-solid-brass-bin-pull-3-on-centers",
+   "price": 10.99,
+   "qty": 1,
+   "tier": "adaptable",
+   "finish": "#c9a256",
+   "explode": [
+    0,
+    0,
+    30
+   ],
+   "notes": "Drill two holes per front on 3\" centers. Price is 'from'.",
+   "dims": {
+    "w": 7.62,
+    "h": 2.79,
+    "d": 1.91
+   },
+   "position": {
+    "x": 24.13,
+    "y": 34.01,
+    "z": 63.82
+   },
+   "bom": true
+  },
+  {
+   "id": "front-1",
+   "layer": "skin",
+   "name": "(included) ENKÖPING drawer front, brown walnut effect",
+   "vendor": "IKEA",
+   "sku": "incl.",
+   "url": "https://www.ikea.com/us/en/p/sektion-maximera-base-cabinet-with-3-drawers-white-enkoeping-brown-walnut-effect-s19472839/",
+   "price": 0,
+   "qty": 1,
+   "tier": "native",
+   "finish": "#5b3a24",
+   "explode": [
+    0,
+    0,
+    36
+   ],
+   "notes": "",
+   "dims": {
+    "w": 60.66,
+    "h": 25.1,
+    "d": 1.91
+   },
+   "position": {
+    "x": 24.13,
+    "y": 49.53,
+    "z": 61.91
+   },
+   "bom": false
+  },
+  {
+   "id": "pull-1",
+   "layer": "hardware",
+   "name": "Classic solid brass bin pull, 3\" centers, unlacquered",
+   "vendor": "Hardwick & Sons",
+   "sku": "3\" bin pull",
+   "url": "https://hardwickandsons.com/collections/cabinet-hardware/products/classic-solid-brass-bin-pull-3-on-centers",
+   "price": 10.99,
+   "qty": 1,
+   "tier": "adaptable",
+   "finish": "#c9a256",
+   "explode": [
+    0,
+    0,
+    40
+   ],
+   "notes": "",
+   "dims": {
+    "w": 7.62,
+    "h": 2.79,
+    "d": 1.91
+   },
+   "position": {
+    "x": 24.13,
+    "y": 59.41,
+    "z": 63.82
+   },
+   "bom": true
+  },
+  {
+   "id": "front-2",
+   "layer": "skin",
+   "name": "(included) ENKÖPING drawer front, brown walnut effect",
+   "vendor": "IKEA",
+   "sku": "incl.",
+   "url": "https://www.ikea.com/us/en/p/sektion-maximera-base-cabinet-with-3-drawers-white-enkoeping-brown-walnut-effect-s19472839/",
+   "price": 0,
+   "qty": 1,
+   "tier": "native",
+   "finish": "#5b3a24",
+   "explode": [
+    0,
+    0,
+    46
+   ],
+   "notes": "",
+   "dims": {
+    "w": 60.66,
+    "h": 25.1,
+    "d": 1.91
+   },
+   "position": {
+    "x": 24.13,
+    "y": 74.93,
+    "z": 61.91
+   },
+   "bom": false
+  },
+  {
+   "id": "pull-2",
+   "layer": "hardware",
+   "name": "Classic solid brass bin pull, 3\" centers, unlacquered",
+   "vendor": "Hardwick & Sons",
+   "sku": "3\" bin pull",
+   "url": "https://hardwickandsons.com/collections/cabinet-hardware/products/classic-solid-brass-bin-pull-3-on-centers",
+   "price": 10.99,
+   "qty": 1,
+   "tier": "adaptable",
+   "finish": "#c9a256",
+   "explode": [
+    0,
+    0,
+    50
+   ],
+   "notes": "",
+   "dims": {
+    "w": 7.62,
+    "h": 2.79,
+    "d": 1.91
+   },
+   "position": {
+    "x": 24.13,
+    "y": 84.81,
+    "z": 63.82
+   },
+   "bom": true
+  },
+  {
+   "id": "filler",
+   "layer": "skin",
+   "name": "Custom painted slab trim for SEKTION (olive), ripped to ~6\" filler",
+   "vendor": "Semihandmade",
+   "sku": "custom painted trim",
+   "url": "https://semihandmade.com/products/custom-painted-slab-trim-for-sektion",
+   "price": 60,
+   "qty": 1,
+   "tier": "certified",
+   "finish": "#5f6448",
+   "explode": [
+    14,
+    0,
+    10
+   ],
+   "notes": "Scribed to the right wall; absorbs the ½\" wall tolerance. 6–8 week lead.",
+   "dims": {
+    "w": 15.24,
+    "h": 76.2,
+    "d": 1.91
+   },
+   "position": {
+    "x": 62.23,
+    "y": 49.53,
+    "z": 61.91
+   },
+   "bom": true
+  },
+  {
+   "id": "endpanel",
+   "layer": "skin",
+   "name": "Custom painted slab cover panel for SEKTION, 26×36\" (olive), cut to 34½×25½\"",
+   "vendor": "Semihandmade",
+   "sku": "custom painted slab",
+   "url": "https://semihandmade.com/products/custom-painted-slab-cover-panels-for-sektion",
+   "price": 159,
+   "qty": 1,
+   "tier": "certified",
+   "finish": "#5f6448",
+   "explode": [
+    -16,
+    0,
+    0
+   ],
+   "notes": "Carries the counter on the fridge side. 8-week lead.",
+   "dims": {
+    "w": 1.91,
+    "h": 87.63,
+    "d": 64.77
+   },
+   "position": {
+    "x": -68.9,
+    "y": 43.81,
+    "z": 32.38
+   },
+   "bom": true
+  },
+  {
+   "id": "toekick",
+   "layer": "skin",
+   "name": "Custom painted slab toekick for SEKTION (olive), 5×93\", cut to 30\"",
+   "vendor": "Semihandmade",
+   "sku": "custom painted toekick",
+   "url": "https://semihandmade.com/products/custom-painted-slab-toekick-for-sektion",
+   "price": 136,
+   "qty": 1,
+   "tier": "certified",
+   "finish": "#5f6448",
+   "explode": [
+    0,
+    -12,
+    14
+   ],
+   "notes": "Under the drawers only; the fridge has its own grille.",
+   "dims": {
+    "w": 76.2,
+    "h": 11.43,
+    "d": 1.91
+   },
+   "position": {
+    "x": 31.75,
+    "y": 5.71,
+    "z": 54.29
+   },
+   "bom": true
+  },
+  {
+   "id": "smhfee",
+   "layer": "skin",
+   "name": "Semihandmade small-order fee (painted order under $700)",
+   "vendor": "Semihandmade",
+   "sku": "fee",
+   "url": "https://www.semihandmade.com/products/custom-painted-beaded-door-for-sektion",
+   "price": 100,
+   "qty": 1,
+   "tier": "certified",
+   "finish": "",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "notes": "Their pages conflict ($100 fee vs. $700 minimum). Confirm before ordering.",
+   "dims": {
+    "w": 0,
+    "h": 0,
+    "d": 0
+   },
+   "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+   },
+   "hidden": true,
+   "bom": true
+  },
+  {
+   "id": "top",
+   "layer": "surface",
+   "name": "SÄLJAN countertop, dark gray stone effect/laminate, 98×1½\"",
+   "vendor": "IKEA",
+   "sku": "see listing",
+   "url": "https://www.ikea.com/us/en/cat/kitchen-countertops-24264/f/black-kitchen-worktops-co003/",
+   "price": 149,
+   "qty": 1,
+   "tier": "native",
+   "finish": "#2f2b29",
+   "explode": [
+    0,
+    26,
+    0
+   ],
+   "notes": "One 98\" length gives the 55\" top plus the backsplash strips.",
+   "dims": {
+    "w": 139.7,
+    "h": 3.81,
+    "d": 65.09
+   },
+   "position": {
+    "x": 0.0,
+    "y": 89.53,
+    "z": 32.54
+   },
+   "bom": true
+  },
+  {
+   "id": "splash",
+   "layer": "surface",
+   "name": "(cut from countertop) 4\" backsplash strip, 43\" piece",
+   "vendor": "IKEA",
+   "sku": "incl.",
+   "url": "",
+   "price": 0,
+   "qty": 1,
+   "tier": "native",
+   "finish": "#2f2b29",
+   "explode": [
+    0,
+    30,
+    -1
+   ],
+   "notes": "Protects the wallpaper from coffee and cocktail splash.",
+   "dims": {
+    "w": 109.22,
+    "h": 10.16,
+    "d": 3.81
+   },
+   "position": {
+    "x": 15.24,
+    "y": 96.52,
+    "z": 1.91
+   },
+   "bom": false
+  },
+  {
+   "id": "splash2",
+   "layer": "surface",
+   "name": "(cut from countertop) 4\" backsplash strip, 12\" piece",
+   "vendor": "IKEA",
+   "sku": "incl.",
+   "url": "",
+   "price": 0,
+   "qty": 1,
+   "tier": "native",
+   "finish": "#2f2b29",
+   "explode": [
+    0,
+    30,
+    -1
+   ],
+   "notes": "Butt-joined to the long piece above the cooler.",
+   "dims": {
+    "w": 30.48,
+    "h": 10.16,
+    "d": 3.81
+   },
+   "position": {
+    "x": -54.61,
+    "y": 96.52,
+    "z": 1.91
+   },
+   "bom": false
+  },
+  {
+   "id": "fridge",
+   "layer": "appliance",
+   "name": "TCL B422D 23.4\" dual-zone wine & beverage cooler, 20 bottles / 78 cans",
+   "vendor": "Lowe's",
+   "sku": "B422D",
+   "url": "https://www.lowes.com/pd/TCL-23-4-in-W-20-Bottles-Stainless-Steel-Dual-Zone-Cooling-Built-in-Freestanding-Indoor-Wine-Cooler/5017343139",
+   "price": 395,
+   "qty": 1,
+   "tier": "independent",
+   "finish": "#1c1c1e",
+   "explode": [
+    0,
+    0,
+    34
+   ],
+   "notes": "23.4\"W × 34.2\"H × 22.5\"D (24.4\" with handle). Wine zone 40–66°F, beverage zone 38–66°F. $395 at Lowe's as you saw it (TCL lists it at $799). Hinge the door on the wall side so it opens toward the drawers; confirm the door is reversible.",
+   "dims": {
+    "w": 59.44,
+    "h": 86.87,
+    "d": 57.15
+   },
+   "position": {
+    "x": -37.15,
+    "y": 43.43,
+    "z": 31.12
+   },
+   "glass": true,
+   "bom": true
+  },
+  {
+   "id": "paper",
+   "layer": "finish",
+   "name": "Astoria Grand Dark Moody Peony floral wall mural (peel-and-stick or non-woven)",
+   "vendor": "Wayfair",
+   "sku": "W122986766",
+   "url": "https://www.wayfair.com/Astoria-Grand--Dark-Moody-Peony-Floral-Wall-Mural-%7C-Vintage-Botanical-Wallpaper-%7C-NonWoven-or-Peel-and-Stick-X233097877-L6161-K~W122986766.html",
+   "price": 25.99,
+   "qty": 1,
+   "tier": "independent",
+   "finish": "#3a2a2f",
+   "explode": [
+    0,
+    0,
+    -2
+   ],
+   "notes": "Size not shown on the page; you need to cover 55\"W × 56\"H. Confirm the panel size before ordering.",
+   "dims": {
+    "w": 139.7,
+    "h": 142.24,
+    "d": 0.25
+   },
+   "position": {
+    "x": 0.0,
+    "y": 172.72,
+    "z": 0.13
+   },
+   "bom": true
+  },
+  {
+   "id": "shelf-lo",
+   "layer": "fixtures",
+   "name": "Omega National (Rev-A-Shelf) walnut floating shelf, 54×10×2½\", concealed bracket",
+   "vendor": "Würth Louis and Company",
+   "sku": "FS0154EUF1",
+   "url": "https://wurthlac.com/product/374222/54-2-5-10-Floating-Shelf-Walnut",
+   "price": 246.6,
+   "qty": 1,
+   "tier": "independent",
+   "finish": "#4f3423",
+   "explode": [
+    0,
+    14,
+    16
+   ],
+   "notes": "Solid walnut, arrives sanded and unfinished. Rated 15 lb per running foot (about 67 lb on 54\"). 10\" deep: two rows of standard 750 ml bottles.",
+   "bom": true,
+   "dims": {
+    "w": 137.16,
+    "h": 6.35,
+    "d": 25.4
+   },
+   "position": {
+    "x": 0.0,
+    "y": 140.34,
+    "z": 12.95
+   }
+  },
+  {
+   "id": "shelf-hi",
+   "layer": "fixtures",
+   "name": "Omega National (Rev-A-Shelf) walnut floating shelf, 54×10×2½\", concealed bracket",
+   "vendor": "Würth Louis and Company",
+   "sku": "FS0154EUF1",
+   "url": "https://wurthlac.com/product/374222/54-2-5-10-Floating-Shelf-Walnut",
+   "price": 246.6,
+   "qty": 1,
+   "tier": "independent",
+   "finish": "#4f3423",
+   "explode": [
+    0,
+    24,
+    16
+   ],
+   "notes": "",
+   "bom": true,
+   "dims": {
+    "w": 137.16,
+    "h": 6.35,
+    "d": 25.4
+   },
+   "position": {
+    "x": 0.0,
+    "y": 186.06,
+    "z": 12.95
+   }
+  },
+  {
+   "id": "led-0",
+   "layer": "fixtures",
+   "name": "Good Earth Lighting 24\" plug-in LED bar, 2980K",
+   "vendor": "Good Earth Lighting",
+   "sku": "UC1139-WHG-24LF0-G",
+   "url": "https://angelesmillwork.com/products/plumbing-electrical/indoor-outdoor-light-fixtures/under-cabinet-fixtures/502622-good-earth-lighting-24-in-plug-in-white-led-under-cabinet-light-bar",
+   "price": 29.49,
+   "qty": 1,
+   "tier": "independent",
+   "finish": "#fff3d6",
+   "explode": [
+    0,
+    8,
+    16
+   ],
+   "notes": "ETL/UL listed, plug-in. One over each side.",
+   "bom": true,
+   "dims": {
+    "w": 60.96,
+    "h": 2.03,
+    "d": 2.03
+   },
+   "position": {
+    "x": -30.48,
+    "y": 136.14,
+    "z": 11.18
+   }
+  },
+  {
+   "id": "led-1",
+   "layer": "fixtures",
+   "name": "Good Earth Lighting 24\" plug-in LED bar, 2980K",
+   "vendor": "Good Earth Lighting",
+   "sku": "UC1139-WHG-24LF0-G",
+   "url": "https://angelesmillwork.com/products/plumbing-electrical/indoor-outdoor-light-fixtures/under-cabinet-fixtures/502622-good-earth-lighting-24-in-plug-in-white-led-under-cabinet-light-bar",
+   "price": 29.49,
+   "qty": 1,
+   "tier": "independent",
+   "finish": "#fff3d6",
+   "explode": [
+    0,
+    8,
+    16
+   ],
+   "notes": "",
+   "bom": true,
+   "dims": {
+    "w": 60.96,
+    "h": 2.03,
+    "d": 2.03
+   },
+   "position": {
+    "x": 33.02,
+    "y": 136.14,
+    "z": 11.18
+   }
+  }
+ ],
+ "cuts": [
+  {
+   "part": "SÄLJAN 98\" countertop",
+   "from": "98 × 25⅝\"",
+   "to": "55\" top (scribe to both walls) + 43\" offcut",
+   "tool": "Circular or track saw",
+   "by": "user"
+  },
+  {
+   "part": "Countertop offcut",
+   "from": "43 × 25⅝\"",
+   "to": "two 4\" strips: 43\" and 12\" (joined above the cooler)",
+   "tool": "Table or track saw",
+   "by": "user"
+  },
+  {
+   "part": "Semihandmade trim",
+   "from": "trim stock",
+   "to": "≈6 × 30\" filler, scribed to the wall",
+   "tool": "Track saw + scribe",
+   "by": "user"
+  },
+  {
+   "part": "Semihandmade cover panel",
+   "from": "26 × 36\"",
+   "to": "25½ × 34½\"",
+   "tool": "Track saw",
+   "by": "user"
+  },
+  {
+   "part": "Semihandmade toekick",
+   "from": "5 × 93\"",
+   "to": "5 × 30\"",
+   "tool": "Miter or track saw",
+   "by": "user"
+  },
+  {
+   "part": "Drawer fronts (×3)",
+   "from": "undrilled",
+   "to": "2 holes each, 3\" centers",
+   "tool": "Drill + jig",
+   "by": "user"
+  },
+  {
+   "part": "Wallpaper",
+   "from": "panel(s)",
+   "to": "55 × 56\" above the strip",
+   "tool": "Knife + smoother",
+   "by": "user"
+  },
+  {
+   "part": "Walnut shelves (×2)",
+   "from": "sanded, unfinished",
+   "to": "finished with oil or poly before hanging",
+   "tool": "Rag or brush",
+   "by": "user"
+  }
+ ],
+ "services": [
+  {
+   "trade": "Electrician",
+   "task": "Dedicated 15A outlet for the cooler (TCL requires it), and check the espresso machine's circuit",
+   "estimate": null
+  }
+ ],
+ "not_priced": [
+  "Electrician (dedicated outlet)",
+  "SEKTION suspension rails for the base and wall cabinets",
+  "Oil or polyurethane finish for the two unfinished walnut shelves",
+  "Screws, anchors and wallpaper smoother",
+  "A second wallpaper panel if one doesn't cover 55 × 56\""
+ ],
+ "checks": [
+  {
+   "joint": "Width",
+   "check": "Fits 55\" wall with tolerance",
+   "result": "pass",
+   "note": "¾\" end panel + 24¼\" cooler bay + 24\" drawers + filler ≈6\" = 55\", left to right. The filler is scribed to the right wall, absorbing ½\" if the walls aren't square."
+  },
+  {
+   "joint": "Stack-up",
+   "check": "Counter height",
+   "result": "pass",
+   "note": "4½\" legs + 30\" cabinet + 1½\" top = 36\"."
+  },
+  {
+   "joint": "Cooler → bay",
+   "check": "Width",
+   "result": "pass",
+   "note": "Bay 24¼\" for a 23.4\" unit: about ⅜\" each side."
+  },
+  {
+   "joint": "Cooler → bay",
+   "check": "Height",
+   "result": "adapt",
+   "note": "Bay is 34½\" under the counter; the cooler is 34.2\". Only 0.3\" spare, so set the cabinet legs high and the cooler's leveling feet low."
+  },
+  {
+   "joint": "Cooler",
+   "check": "Ventilation",
+   "result": "adapt",
+   "note": "Sold as built-in capable, but neither the listing nor the manual says where it vents. Confirm front venting with TCL before enclosing it; a rear-venting cooler would overheat here."
+  },
+  {
+   "joint": "Cooler door",
+   "check": "Swing",
+   "result": "adapt",
+   "note": "With the cooler against the left wall, hinge it on the wall side so it opens toward the drawers. The manual doesn't describe reversing the door, so confirm with TCL."
+  },
+  {
+   "joint": "Cooler",
+   "check": "Power",
+   "result": "adapt",
+   "note": "TCL's manual requires its own dedicated 15A outlet; no power strips. Have an electrician add one, and keep the espresso machine on a separate circuit."
+  },
+  {
+   "joint": "Drawers",
+   "check": "Fit",
+   "result": "pass",
+   "note": "Complete IKEA unit (frame, drawers, fronts)."
+  },
+  {
+   "joint": "Upper layout",
+   "check": "Shelf clearance",
+   "result": "pass",
+   "note": "Two 54\" shelves span the wall with ½\" clear at each end, so uneven walls won't bind them."
+  },
+  {
+   "joint": "Shelves",
+   "check": "Load",
+   "result": "adapt",
+   "note": "Rated 15 lb/ft, about 67 lb per shelf. A full 750 ml bottle is roughly 3 lb, so that is about 22 bottles per shelf: two rows of ~11, spaced across the 54\". Packed edge to edge, two rows would exceed the rating. Each bracket must hit studs."
+  },
+  {
+   "joint": "Bottles",
+   "check": "Height and depth",
+   "result": "pass",
+   "note": "15½\" clear between shelves for tall bottles. 10\" depth fits two rows of standard 750 ml bottles; 1.75 L handles fit one row."
+  },
+  {
+   "joint": "Machine",
+   "check": "Clearance",
+   "result": "pass",
+   "note": "18\" from the counter to the lower shelf."
+  },
+  {
+   "joint": "Wallpaper",
+   "check": "Splash and moisture",
+   "result": "adapt",
+   "note": "A 4\" strip cut from the countertop protects the bottom edge. The listing doesn't say the paper is washable."
+  },
+  {
+   "joint": "Wallpaper",
+   "check": "Quantity",
+   "result": "adapt",
+   "note": "The panel size isn't listed. Confirm one panel covers 55 × 56\" (assumes an 8 ft ceiling)."
+  },
+  {
+   "joint": "Schedule",
+   "check": "Lead time",
+   "result": "adapt",
+   "note": "Semihandmade painted parts take 6–8 weeks; everything else ships in days."
+  }
+ ]
+}
