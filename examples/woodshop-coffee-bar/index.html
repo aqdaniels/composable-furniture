@@ -1,0 +1,481 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Coffee Bar Build Packet</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: shop-drawing sheet. Title block, sticky section strip, one reading column, tables as the working surface. */
+:root{
+  --bg:#EDEFF0; --surface:#FAFBFB; --ink:#161B20; --ink2:#56606A; --line:#D3D8DC; --line2:#E4E8EA;
+  --walnut:#6A4630; --brass:#8F6B1E; --blue:#1F5A8F; --wash:#E4E9EC; --ok:#2E6B45;
+  --f-head:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1316; --surface:#171C21; --ink:#E7EAEC; --ink2:#98A2AA; --line:#2A3138; --line2:#202730;
+  --walnut:#D3A27D; --brass:#D1A64A; --blue:#7FB2E0; --wash:#1E252B; --ok:#7CC49A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1316; --surface:#171C21; --ink:#E7EAEC; --ink2:#98A2AA; --line:#2A3138; --line2:#202730;
+  --walnut:#D3A27D; --brass:#D1A64A; --blue:#7FB2E0; --wash:#1E252B; --ok:#7CC49A; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--f-body);-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surface);z-index:30}
+a{color:var(--blue);text-underline-offset:2px}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto}
+header.sheet{background:var(--surface);border-bottom:1px solid var(--line)}
+header.sheet .wrap{padding-block:28px 0}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+h1{font:600 clamp(30px,5.2vw,46px)/1.05 var(--f-head);letter-spacing:-.01em;margin:10px 0 6px;text-wrap:balance}
+.sub{color:var(--ink2);max-width:62ch;margin:0 0 22px}
+.tblock{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.tblock div{padding:10px 14px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:0}
+.tblock dt{font:500 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin:0 0 6px}
+.tblock dd{margin:0;font:500 15px/1.3 var(--f-body)}
+.tblock{margin:0 0 -1px}
+nav.strip{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.strip .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin}
+nav.strip a{flex:none;padding:12px 12px;font:500 13px/1 var(--f-head);letter-spacing:.02em;text-transform:uppercase;color:var(--ink2);text-decoration:none;border-bottom:2px solid transparent}
+nav.strip a:hover{color:var(--ink)}
+nav.strip a[aria-current]{color:var(--ink);border-bottom-color:var(--walnut)}
+nav.strip a:focus-visible,button:focus-visible,input:focus-visible+span,summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+main .wrap{padding-block:8px 72px}
+section{padding-top:44px;scroll-margin-top:56px}
+h2{font:600 26px/1.15 var(--f-head);margin:0 0 6px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+h2 small{font:500 12px/1 var(--f-mono);color:var(--ink2);letter-spacing:.04em;text-transform:uppercase}
+h3{font:600 17px/1.2 var(--f-head);margin:26px 0 8px}
+p{margin:0 0 12px;max-width:72ch}
+.lead{font-size:16px;max-width:72ch}
+.twin{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);padding:10px}
+figure img{display:block;width:100%;height:auto;background:#fff}
+figcaption{font:400 12px/1.4 var(--f-mono);color:var(--ink2);padding-top:8px}
+.tw{overflow-x:auto;border:1px solid var(--line);background:var(--surface);margin:12px 0}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:14px}
+th,td{padding:8px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line2)}
+th{font:500 11px/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--wash);white-space:nowrap;position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.m{font-family:var(--f-mono);font-size:13px;font-variant-numeric:tabular-nums}
+tr.tot td{background:var(--wash);font-weight:600}
+tr.allow td{color:var(--ink2)}
+td small,.note{color:var(--ink2);font-size:13px}
+.note{max-width:72ch;margin:8px 0 0}
+.flag{border:1px solid var(--brass);background:var(--surface);padding:10px 14px;margin:12px 0;font-size:14px;max-width:72ch}
+.flag b{font:600 12px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--brass);display:block;margin-bottom:4px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+.chips button,.btn{font:500 13px/1 var(--f-body);padding:8px 12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:4px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--walnut);border-color:var(--walnut);color:var(--surface)}
+.btn:hover,.chips button:hover{border-color:var(--ink2)}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.bar .status{font:400 12px/1 var(--f-mono);color:var(--ok)}
+.check{list-style:none;margin:10px 0 0;padding:0;max-width:78ch}
+.check li{border-bottom:1px solid var(--line2)}
+.check label{display:flex;gap:12px;padding:9px 0;cursor:pointer;align-items:flex-start}
+.check input{margin:4px 0 0;width:16px;height:16px;flex:none;accent-color:var(--walnut)}
+.check input:checked+span{color:var(--ink2);text-decoration:line-through;text-decoration-color:var(--line)}
+ol.check{counter-reset:s}
+ol.check li{counter-increment:s}
+ol.check label::before{content:counter(s);flex:none;width:22px;font:500 12px/22px var(--f-mono);color:var(--ink2);text-align:right}
+.prog{font:500 12px/1 var(--f-mono);color:var(--ink2);letter-spacing:.04em}
+.cx{margin:14px 0 6px}
+.cax,.crow{display:grid;grid-template-columns:minmax(150px,230px) 1fr;gap:16px;align-items:center}
+.cax{font:400 11px/1 var(--f-mono);color:var(--ink2);margin-bottom:4px}
+.cax div{display:flex;justify-content:space-between}
+.crow{padding:9px 0;border-top:1px solid var(--line2)}
+.clabel strong{display:block;font:600 14px/1.2 var(--f-body)}
+.clabel small{display:block;color:var(--ink2);font-size:12px;line-height:1.35;margin-top:2px}
+.ctrack{display:flex;align-items:center;height:24px;background:linear-gradient(90deg,transparent calc(33.33% - .5px),var(--line) calc(33.33% - .5px) calc(33.33% + .5px),transparent calc(33.33% + .5px) calc(66.66% - .5px),var(--line) calc(66.66% - .5px) calc(66.66% + .5px),transparent calc(66.66% + .5px))}
+.ctrack i{display:block;height:20px;flex:none}
+.ctrack .s{background:var(--walnut)}
+.ctrack .a{border:1px solid var(--brass);background:repeating-linear-gradient(135deg,var(--brass) 0 2px,transparent 2px 5px)}
+.ctrack .r{border:1px dashed var(--brass);border-left:0;background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--brass) 45%,transparent) 0 2px,transparent 2px 5px)}
+.ctrack b{font:500 12px/1 var(--f-mono);margin-left:8px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin:6px 0 0}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:22px;height:10px}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);background:var(--surface);margin:16px 0}
+.sum div{padding:12px 14px;border-right:1px solid var(--line)}
+.sum div:last-child{border-right:0}
+.sum dt{font:500 11px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);margin:0 0 6px}
+.sum dd{margin:0;font:600 20px/1.2 var(--f-head)}
+.sum dd small{font:400 12px/1 var(--f-mono);color:var(--ink2);display:block;margin-top:4px}
+code{font:400 13px var(--f-mono)}
+footer{border-top:1px solid var(--line);color:var(--ink2);font-size:13px;padding-block:18px 28px;background:var(--surface)}
+@media (max-width:720px){
+  .tblock{grid-template-columns:1fr 1fr}
+  .twin{grid-template-columns:1fr}
+  .cax,.crow{grid-template-columns:1fr;gap:6px}
+  .cax{display:none}
+  .sum{grid-template-columns:1fr}
+  .sum div{border-right:0;border-bottom:1px solid var(--line)}
+  .sum div:last-child{border-bottom:0}
+  h2{font-size:23px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<header class="sheet gut"><div class="wrap">
+  <div class="eyebrow">Build packet · 48 in coffee and bar unit · rev Nov 13 2026</div>
+  <h1>Coffee and Bar Cabinet</h1>
+  <p class="sub">Walnut base with a built-in dual-zone cooler on the left, a three-tier coffee drawer stack on the right, one black glass upper over the cooler, and two floating shelves over the espresso station. Dimensions come from the Fusion model.</p>
+  <dl class="tblock">
+    <div><dt>Overall</dt><dd>48 × 25.5 × 96 in</dd></div>
+    <div><dt>Counter height</dt><dd>36 in, stone 1.5 in</dd></div>
+    <div><dt>Cooler</dt><dd>TCL B422D, 23.4 in</dd></div>
+    <div><dt>Prices checked</dt><dd>Nov 13 2026</dd></div>
+  </dl>
+</div></header>
+
+<nav class="strip gut" aria-label="Sections"><div class="wrap">
+  <a href="#overview">Overview</a><a href="#drawings">Drawings</a><a href="#appliances">Appliances</a><a href="#cutlist">Cut list</a><a href="#materials">Materials</a><a href="#hardware">Hardware</a><a href="#outsourced">Outsourced</a><a href="#cost">Cost</a><a href="#electrical">Electrical</a><a href="#assembly">Assembly</a><a href="#install">Install</a><a href="#finishing">Finishing</a>
+</div></nav>
+
+<main class="gut"><div class="wrap">
+
+<section id="overview">
+  <h2>Overview <small>layout left to right, from the room</small></h2>
+  <p class="lead">A 48 in wide unit against a 96 in ceiling. Left side panel, cooler bay, partition, drawer stack, right side panel. The cooler door face sits flush with the drawer fronts at 24.75 in from the wall, and the counter overhangs them by 0.75 in.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Element</th><th class="n">Width in</th><th class="n">Depth in</th><th class="n">Height in</th><th>Location</th></tr></thead>
+    <tbody>
+      <tr><td>Base cabinet carcass</td><td class="n">48</td><td class="n">24</td><td class="n">34.5</td><td>Floor, against wall</td></tr>
+      <tr><td>Cooler bay (left)</td><td class="n">23.75 opening</td><td class="n">24</td><td class="n">34.5</td><td class="m">x 0.75 to 24.5</td></tr>
+      <tr><td>Coffee drawer bay (right)</td><td class="n">22 opening</td><td class="n">24</td><td class="n">30.5 above 4 in toe kick</td><td class="m">x 25.25 to 47.25</td></tr>
+      <tr><td>Countertop</td><td class="n">48</td><td class="n">25.5</td><td class="n">1.5</td><td>Top at 36</td></tr>
+      <tr><td>Upper glass cabinet</td><td class="n">24</td><td class="n">13</td><td class="n">42</td><td>Over cooler, bottom at 54</td></tr>
+      <tr><td>Floating shelves (2)</td><td class="n">22</td><td class="n">10</td><td class="n">1.5</td><td>Over drawers, at 60 and 72</td></tr>
+      <tr><td>Mirror backsplash</td><td class="n">48</td><td class="n">0.25</td><td class="n">60</td><td>36 to 96</td></tr>
+    </tbody></table></div>
+  <h3>Open items before you order <span class="prog" data-count-for="open"></span></h3>
+  <ul class="check">
+    <li><label><input type="checkbox" data-key="o1" data-list="open"><span>Measure the espresso machine, grinder, kettle and pod machine, then update the placeholder bodies in Fusion.</span></label></li>
+    <li><label><input type="checkbox" data-key="o2" data-list="open"><span>Confirm the pod machine fits the 16.25 in tall roll-out bay, or raise the door and shrink the middle drawer.</span></label></li>
+    <li><label><input type="checkbox" data-key="o3" data-list="open"><span>Order slides and hinges before cutting drawer boxes. Box width depends on the slide model.</span></label></li>
+    <li><label><input type="checkbox" data-key="o4" data-list="open"><span>Decide quartz or marble. Marble stains with coffee and citrus, quartz does not.</span></label></li>
+    <li><label><input type="checkbox" data-key="o5" data-list="open"><span>Decide whether the counter's left end is finished or runs into a wall.</span></label></li>
+    <li><label><input type="checkbox" data-key="o6" data-list="open"><span>Check the breaker rating on the existing outlet and whether that circuit feeds anything else.</span></label></li>
+    <li><label><input type="checkbox" data-key="o7" data-list="open"><span>Have an electrician add the 20 A counter circuit before the mirror goes up.</span></label></li>
+    <li><label><input type="checkbox" data-key="o8" data-list="open"><span>Book the stone fabricator and glass shop before starting the base so their lead times overlap the build.</span></label></li>
+  </ul>
+</section>
+
+<section id="drawings">
+  <h2>Drawings <small>Fusion model, viewed from the room</small></h2>
+  <p>Walnut is the base and shelves, black is the upper cabinet and cooler case, white stands in for the stone top. The three gray boxes on the counter are the espresso machine, grinder and kettle placeholders used for clearance checks.</p>
+  <div class="twin">
+    <figure><img src="img/front-elevation.png" alt="Front elevation of the 48 inch unit: glass upper and cooler on the left, floating shelves, appliances and three-tier drawer stack on the right" width="700" height="900"><figcaption>Front elevation. Cooler left, drawers right.</figcaption></figure>
+    <figure><img src="img/isometric.png" alt="Isometric view from the right showing depth of the upper cabinet, shelves and base" width="900" height="800"><figcaption>Isometric from the right.</figcaption></figure>
+  </div>
+</section>
+
+<section id="appliances">
+  <h2>Appliances and clearances</h2>
+  <p>The cooler sets the cabinet height: it needs 34.17 in under the counter and a 34.5 in carcass gives it 0.33 in. That bay has no plywood sub-top, only 3 in front and rear stretchers, so the stone rests on the side panel, partition and stretchers. Ask the fabricator to confirm a 1.5 in slab spans the 23.75 in bay unsupported in the middle. Most quartz will.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Appliance</th><th class="n">W in</th><th>Depth in</th><th class="n">H in</th><th>Clearance provided</th><th>Price</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://www.lowes.com/pd/TCL-23-4-in-W-20-Bottles-Stainless-Steel-Dual-Zone-Cooling-Built-in-Freestanding-Indoor-Wine-Cooler/5017343139">TCL B422D dual-zone wine and beverage cooler</a></td><td class="n">23.4</td><td>22.5 with doors, 24.4 with handles</td><td class="n">34.17</td><td>0.175 each side, 0.33 above, front vented so zero rear gap</td><td>$395.00 sale, was $799.00, ends Nov 18 2026. Lowe's, checked Nov 13 2026</td></tr>
+      <tr><td>Espresso machine (placeholder)</td><td class="n">12</td><td>16</td><td class="n">15</td><td>9 in to lower floating shelf</td><td>Owned</td></tr>
+      <tr><td>Grinder (placeholder)</td><td class="n">6</td><td>12</td><td class="n">15</td><td>9 in to lower floating shelf</td><td>Owned</td></tr>
+      <tr><td>Electric kettle (placeholder)</td><td class="n">8</td><td>8</td><td class="n">10</td><td>8 in to upper cabinet bottom</td><td>Owned</td></tr>
+      <tr><td>Pod machine (stored)</td><td class="n"></td><td></td><td class="n">up to 16</td><td>Roll-out tray bay is 16.25 in tall, 21 in wide, 22 in deep</td><td>Owned</td></tr>
+    </tbody></table></div>
+  <p class="note">Cooler: 106 lb, French doors, 20 bottles or 78 cans, wine zone 40 to 66 F, beverage zone 38 to 66 F, toe grille vents forward. Rated built-in, so no side or rear ventilation gap is required. Stainless handles ship in the box.</p>
+</section>
+
+<section id="cutlist">
+  <h2>Cut list <small>28 parts, finished inches</small></h2>
+  <p>Length runs with the grain. Frameless construction, 3/4 in carcass with 1/4 in backs, full overlay fronts with 1/8 in reveals. Drawer boxes are sized for 21 in Blum Tandem undermount slides, box width = opening minus 5/8 in.</p>
+  <div class="chips" role="group" aria-label="Filter cut list">
+    <button type="button" data-filter="all" aria-pressed="true">All</button>
+    <button type="button" data-filter="base" aria-pressed="false">Base</button>
+    <button type="button" data-filter="fronts" aria-pressed="false">Fronts</button>
+    <button type="button" data-filter="drawers" aria-pressed="false">Drawers</button>
+    <button type="button" data-filter="upper" aria-pressed="false">Upper</button>
+    <button type="button" data-filter="shelves" aria-pressed="false">Shelves</button>
+  </div>
+  <div class="tw"><table id="cut">
+    <thead><tr><th>Part</th><th class="n">Qty</th><th class="n">Length</th><th class="n">Width</th><th class="n">Thick</th><th>Material</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr data-part="base"><td>Base left side</td><td class="n">1</td><td class="n">34.5</td><td class="n">24</td><td class="n">0.75</td><td>Walnut ply</td><td>Finished face out, edge band front</td></tr>
+      <tr data-part="base"><td>Base right side</td><td class="n">1</td><td class="n">34.5</td><td class="n">24</td><td class="n">0.75</td><td>Walnut ply</td><td>Finished face out, edge band front</td></tr>
+      <tr data-part="base"><td>Base partition</td><td class="n">1</td><td class="n">34.5</td><td class="n">24</td><td class="n">0.75</td><td>Walnut ply</td><td>Edge band front, cooler side finished</td></tr>
+      <tr data-part="base"><td>Right bay bottom</td><td class="n">1</td><td class="n">24</td><td class="n">22</td><td class="n">0.75</td><td>Walnut ply</td><td>Edge band front</td></tr>
+      <tr data-part="base"><td>Right bay sub-top</td><td class="n">1</td><td class="n">24</td><td class="n">22</td><td class="n">0.75</td><td>Walnut ply</td><td>Counter bears on this</td></tr>
+      <tr data-part="base"><td>Right bay back</td><td class="n">1</td><td class="n">29.75</td><td class="n">22</td><td class="n">0.25</td><td>Walnut ply</td><td>In 1/4 in dado or nailed on</td></tr>
+      <tr data-part="base"><td>Toe kick</td><td class="n">1</td><td class="n">23.5</td><td class="n">4</td><td class="n">0.75</td><td>Walnut ply</td><td>Set back 3 in, right bay only</td></tr>
+      <tr data-part="base"><td>Cooler bay front stretcher</td><td class="n">1</td><td class="n">23.75</td><td class="n">3</td><td class="n">0.75</td><td>Walnut ply</td><td>Flush with top, pocket screwed</td></tr>
+      <tr data-part="base"><td>Cooler bay rear stretcher</td><td class="n">1</td><td class="n">23.75</td><td class="n">3</td><td class="n">0.75</td><td>Walnut ply</td><td>Flush with top, also the wall anchor rail</td></tr>
+      <tr data-part="fronts"><td>Top drawer front</td><td class="n">1</td><td class="n">22.625</td><td class="n">4.875</td><td class="n">0.75</td><td>Walnut ply</td><td>Grain vertical, all four edges banded</td></tr>
+      <tr data-part="fronts"><td>Middle drawer front</td><td class="n">1</td><td class="n">22.625</td><td class="n">7.875</td><td class="n">0.75</td><td>Walnut ply</td><td>Grain matched to top front</td></tr>
+      <tr data-part="fronts"><td>Door front</td><td class="n">1</td><td class="n">22.625</td><td class="n">17.375</td><td class="n">0.75</td><td>Walnut ply</td><td>Grain matched, hinges left</td></tr>
+      <tr data-part="drawers"><td>Top drawer box sides</td><td class="n">2</td><td class="n">21</td><td class="n">3.5</td><td class="n">0.5</td><td>Baltic birch</td><td>1/4 in groove for bottom</td></tr>
+      <tr data-part="drawers"><td>Top drawer box front and back</td><td class="n">2</td><td class="n">20.375</td><td class="n">3.5</td><td class="n">0.5</td><td>Baltic birch</td><td></td></tr>
+      <tr data-part="drawers"><td>Middle drawer box sides</td><td class="n">2</td><td class="n">21</td><td class="n">6</td><td class="n">0.5</td><td>Baltic birch</td><td></td></tr>
+      <tr data-part="drawers"><td>Middle drawer box front and back</td><td class="n">2</td><td class="n">20.375</td><td class="n">6</td><td class="n">0.5</td><td>Baltic birch</td><td></td></tr>
+      <tr data-part="drawers"><td>Drawer bottoms</td><td class="n">2</td><td class="n">20.875</td><td class="n">20.5</td><td class="n">0.25</td><td>Baltic birch</td><td></td></tr>
+      <tr data-part="drawers"><td>Roll-out tray sides</td><td class="n">2</td><td class="n">22</td><td class="n">3.5</td><td class="n">0.5</td><td>Baltic birch</td><td>For 22 in side-mount slides</td></tr>
+      <tr data-part="drawers"><td>Roll-out tray front and back</td><td class="n">2</td><td class="n">20</td><td class="n">3.5</td><td class="n">0.5</td><td>Baltic birch</td><td>Tray is 21 wide overall</td></tr>
+      <tr data-part="drawers"><td>Roll-out tray bottom</td><td class="n">1</td><td class="n">21.5</td><td class="n">20.5</td><td class="n">0.25</td><td>Baltic birch</td><td></td></tr>
+      <tr data-part="upper"><td>Upper sides</td><td class="n">2</td><td class="n">42</td><td class="n">13</td><td class="n">0.75</td><td>Birch ply, painted black</td><td>Edge band front</td></tr>
+      <tr data-part="upper"><td>Upper top and bottom</td><td class="n">2</td><td class="n">22.5</td><td class="n">13</td><td class="n">0.75</td><td>Birch ply, painted black</td><td></td></tr>
+      <tr data-part="upper"><td>Upper back</td><td class="n">1</td><td class="n">40.5</td><td class="n">22.5</td><td class="n">0.25</td><td>Birch ply, painted black</td><td></td></tr>
+      <tr data-part="upper"><td>Upper shelves</td><td class="n">3</td><td class="n">22.5</td><td class="n">12.75</td><td class="n">0.75</td><td>Walnut ply</td><td>Adjustable on shelf pins</td></tr>
+      <tr data-part="upper"><td>French cleat halves</td><td class="n">2</td><td class="n">22.5</td><td class="n">4</td><td class="n">0.75</td><td>Birch ply</td><td>45 degree rip, one on wall, one on cabinet</td></tr>
+      <tr data-part="upper"><td>Upper door stiles</td><td class="n">2</td><td class="n">42</td><td class="n">2</td><td class="n">0.75</td><td>Poplar, painted black</td><td>1/4 by 3/8 in rabbet for glass</td></tr>
+      <tr data-part="upper"><td>Upper door rails</td><td class="n">2</td><td class="n">20</td><td class="n">2</td><td class="n">0.75</td><td>Poplar, painted black</td><td>Tenoned or pocket screwed to stiles</td></tr>
+      <tr data-part="shelves"><td>Floating shelves</td><td class="n">2</td><td class="n">22</td><td class="n">10</td><td class="n">1.5</td><td>Solid walnut</td><td>Glue up from 8/4, drill for rod brackets</td></tr>
+    </tbody></table></div>
+  <p class="note">The three fronts come from one 22.625 by 30.5 in blank, cut in order top to bottom so the grain runs continuously down the stack.</p>
+</section>
+
+<section id="materials">
+  <h2>Sheet goods and lumber <small>prices read Nov 13 2026</small></h2>
+  <p>Two sheets of walnut ply cover the base, fronts and upper shelves with room for grain matching. Everything painted black comes from one birch sheet. The 1/4 in sheet can be birch rather than walnut: the base back hides behind drawers and the upper back is painted.</p>
+  <div class="bar"><button type="button" class="btn" id="copy">Copy order list</button><span class="status" id="copied" role="status"></span></div>
+  <div class="tw"><table id="mat">
+    <thead><tr><th>Material</th><th class="n">Qty</th><th>Size</th><th>Used for</th><th class="n">Unit</th><th class="n">Line</th><th>Source</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>3/4 in walnut plywood, G2S veneer core</td><td class="n">2 sheets</td><td>4 × 8 ft</td><td>Base carcass, three fronts, upper shelves</td><td class="n">$176.95</td><td class="n">$353.90</td><td><a href="https://www.toledoplywood.com/product/3-4-4-x-8-vc-g2s-walnut/">Toledo Plywood</a></td><td>Regional yard, 93 in stock. A local hardwood dealer will be similar. Home Depot stocks only 2 × 8 ft walnut panels.</td></tr>
+      <tr><td>3/4 in birch plywood, PureBond</td><td class="n">1 sheet</td><td>4 × 8 ft</td><td>Upper cabinet carcass, French cleat</td><td class="n">$75.73</td><td class="n">$75.73</td><td><a href="https://www.homedepot.com/p/Columbia-Forest-Products-3-4-in-x-4-ft-x-8-ft-PureBond-Birch-Plywood-165921/100077837">Home Depot 165921</a></td><td>Lowe's shows this item by store only.</td></tr>
+      <tr><td>1/4 in birch plywood</td><td class="n">1 sheet</td><td>4 × 8 ft</td><td>Base back, upper back</td><td class="n">$46.08</td><td class="n">$46.08</td><td><a href="https://www.lowes.com/pd/Top-Choice-1-4-in-HPVA-Birch-Plywood-Application-as-4-x-8/1000177993">Lowe's 796770</a></td><td>Out of stock online on Nov 13. Check the store.</td></tr>
+      <tr><td>1/2 in Baltic birch</td><td class="n">2 sheets</td><td>30 × 30 in</td><td>Two drawer boxes, roll-out tray</td><td class="n">$38.99</td><td class="n">$77.98</td><td><a href="https://www.rockler.com/baltic-birch-plywood-choose-thickness">Rockler</a></td><td>Pick 1/2 in on the page.</td></tr>
+      <tr><td>1/4 in Baltic birch</td><td class="n">2 sheets</td><td>30 × 30 in</td><td>Drawer and tray bottoms</td><td class="n">$21.99</td><td class="n">$43.98</td><td><a href="https://www.rockler.com/baltic-birch-plywood-choose-thickness">Rockler</a></td><td>Pick 1/4 in on the page.</td></tr>
+      <tr><td>8/4 walnut, FAS, rough</td><td class="n">8 bd ft</td><td>About 10 in wide</td><td>Two floating shelves</td><td class="n">$16.00 /bf</td><td class="n">$128.00</td><td><a href="https://www.bellforestproducts.com/walnut/lumber/">Bell Forest Products</a></td><td>Under the 10 bf tier. Shipping extra. Finishes at about 1.75 in, plane to 1.5.</td></tr>
+      <tr><td>1x3x8 poplar, S4S</td><td class="n">2 boards</td><td>0.75 × 2.5 × 96 in</td><td>Upper glass door frame</td><td class="n">$15.84</td><td class="n">$31.68</td><td><a href="https://www.lowes.com/pd/ReliaBilt-1-in-x-3-in-x-8-ft-Square-Unfinished-Poplar-Board/5002010275">Lowe's 5002010275</a></td><td>Rip to 2 in.</td></tr>
+      <tr><td>Pre-glued walnut edge banding</td><td class="n">1 roll</td><td>3/4 in × 50 ft</td><td>All exposed ply edges</td><td class="n">$69.88</td><td class="n">$69.88</td><td><a href="https://www.homedepot.com/p/Unbranded-3-4-in-x-50-ft-Wood-Veneer-Edge-Banding-Pre-Glued-Iron-On-Walnut-1-Roll-EDA0919/700160387">Home Depot EDA0919</a></td><td>3/4 in wide, so apply carefully flush. 13/16 in gives more trim margin if you find it.</td></tr>
+      <tr class="tot"><td colspan="5">Sheet goods and lumber subtotal</td><td class="n">$827.23</td><td colspan="2">Before tax and shipping</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="hardware">
+  <h2>Hardware <small>soft-close throughout</small></h2>
+  <p>Soft-close undermount slides and concealed hinges keep the fronts clean. Brass bar pulls tie the walnut base to the black upper cabinet.</p>
+  <div class="flag"><b>Check before ordering</b>The shelf bracket listing does not state the shelf thickness it fits. Confirm it takes a 1.5 in shelf and bores 0.47 in (about 1/2 in) rod holes before you drill the walnut.</div>
+  <div class="tw"><table id="hw">
+    <thead><tr><th>Item</th><th class="n">Qty</th><th>Spec</th><th>Where</th><th class="n">Unit</th><th class="n">Line</th><th>Link</th></tr></thead>
+    <tbody>
+      <tr><td>Blum Tandem 563H undermount slides, soft close</td><td class="n">2 pairs</td><td>21 in, 100 lb, part 563H5330B</td><td>Top and middle drawers</td><td class="n">$21.99 /pair<br><small>sale to Nov 21, regular $33.00</small></td><td class="n">$43.98</td><td><a href="https://www.cabinetparts.com/p/blum-drawer-slides-undermount-drawer-slides-BS563H5330B-p9167">CabinetParts</a></td></tr>
+      <tr class="allow"><td>Blum front locking devices for Tandem</td><td class="n">2 pairs</td><td>T51.1700 left and right</td><td>Drawer boxes</td><td class="n">about $5 /pair</td><td class="n">allowance</td><td>Same vendor, under accessories</td></tr>
+      <tr><td>RELIABILT side-mount full-extension slides</td><td class="n">1 pair</td><td>22 in, 100 lb, ball bearing</td><td>Roll-out tray</td><td class="n">$19.98</td><td class="n">$19.98</td><td><a href="https://www.lowes.com/pd/RELIABILT-22-in-Full-Extension-Side-Mount-Ball-Bearing-Drawer-Slides/5014522853">Lowe's 5329115</a></td></tr>
+      <tr><td>Blum 71B3550 Clip top Blumotion hinges, 110 degree, full overlay</td><td class="n">6</td><td>35 mm cup, nickel</td><td>3 on base door, 3 on upper door</td><td class="n">$4.33<br><small>regular $6.19</small></td><td class="n">$25.98</td><td><a href="https://www.cabinetparts.com/p/blum-hinges-european-cabinet-hinges-BH71B3550-p6655">CabinetParts</a></td></tr>
+      <tr class="allow"><td>Blum 0 mm frameless mounting plates</td><td class="n">6</td><td>Part 173L6100 or 175H7100</td><td>With the hinges</td><td class="n">about $1.50</td><td class="n">allowance</td><td>Same page, under mounting plates</td></tr>
+      <tr><td>Sumner Street Vail bar pull, satin brass</td><td class="n">2</td><td>8 in center to center</td><td>Drawers, horizontal</td><td class="n">$14.97</td><td class="n">$29.94</td><td><a href="https://www.lowes.com/pd/Sumner-Street-Home-Hardware-Vail-8-in-Center-to-Center-Satin-Brass-Rectangular-Bar-Cabinet-Door-Pull/1001368116">Lowe's 1671524</a></td></tr>
+      <tr><td>Sumner Street Vail bar pull, satin brass</td><td class="n">2</td><td>12 in center to center</td><td>Base door and upper door, vertical</td><td class="n">$26.97</td><td class="n">$53.94</td><td>Same page, choose 12 in</td></tr>
+      <tr><td>KIWDZFU hidden floating shelf brackets, stainless</td><td class="n">1 set of 4</td><td>0.47 × 6 in rods, 100 lb per pair</td><td>Two per shelf, lagged into studs</td><td class="n">$85.98</td><td class="n">$85.98</td><td><a href="https://www.lowes.com/pd/KIWDZFU-Stainless-Steel-Floating-Shelf-Bracket-Heavy-Duty-Invisible-Mounting-Hardware-for-Wall-Mantels-and-Shelves-Solid-Metal-Rod-Half-Inch/6350363">Lowe's 6350363</a></td></tr>
+      <tr><td>Slagawa 24 V COB LED strip, tunable 2700 to 6500 K, dimmable</td><td class="n">1 kit</td><td>16.4 ft, RF remote</td><td>Cut to 21 in under the upper and two 20 in runs under the shelves</td><td class="n">$87.99</td><td class="n">$87.99</td><td><a href="https://www.lowes.com/pd/Slagawa-16-4ft-COB-LED-Strip-Light-2700K-6500K-Tunable-White-Dimmable-24V-Tape-Light-with-RF-Remote-for-Under-Cabinet-Bedroom-Kitchen-Office/105568079">Lowe's 105568079</a></td></tr>
+      <tr class="allow"><td>Aluminum LED channel with frosted diffuser</td><td class="n">3</td><td>24 in lengths</td><td>Over the LED runs</td><td class="n">about $10</td><td class="n">allowance</td><td>Any 24 V channel kit</td></tr>
+      <tr><td>POWERTEC heavy-duty leveler legs</td><td class="n">1 pack of 4</td><td>600 lb, lock nuts, model 71136</td><td>Under right bay</td><td class="n">$16.50</td><td class="n">$16.50</td><td><a href="https://www.homedepot.com/p/POWERTEC-Heavy-Duty-Leveler-Legs-with-Lock-Nuts-for-Cabinets-Furniture-Shelves-Tables-4-Pack-71136/307632361">Home Depot</a></td></tr>
+      <tr class="allow"><td>Shelf pins, 5 mm brass</td><td class="n">12</td><td></td><td>Upper cabinet shelves</td><td class="n">not priced</td><td class="n">allowance</td><td></td></tr>
+      <tr class="allow"><td>Pocket screws 1-1/4 in, cabinet screws #10 × 3 in, 18 ga brads, wood glue</td><td class="n">1 each</td><td></td><td>Carcass, wall anchoring, backs</td><td class="n">about $40 total</td><td class="n">allowance</td><td></td></tr>
+      <tr class="allow"><td>Mirror mastic, J-channel, clear silicone</td><td class="n">1 each</td><td>Neutral cure</td><td>Backsplash, glass, counter seam</td><td class="n">about $30 total</td><td class="n">allowance</td><td></td></tr>
+      <tr class="tot"><td colspan="5">Hardware subtotal, priced items</td><td class="n">$364.29</td><td>Checked Nov 13 2026</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="outsourced">
+  <h2>Countertop, mirror and glass</h2>
+  <p>Three items come from outside shops. The counter must be templated after the base is set and shimmed, not from these numbers alone.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Item</th><th>Size in</th><th>Spec</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Stone countertop</td><td>48 × 25.5 × 1.5 (3 cm)</td><td>Quartz or marble, eased or small ogee edge on front and both ends, no stone backsplash</td><td>Finished ends on both sides unless a wall is tight to one end. Ask the fabricator to confirm the 23.75 in unsupported span over the cooler.</td></tr>
+      <tr><td>Antiqued mirror backsplash</td><td>48 × 60 × 0.25</td><td>Antiqued or smoked mirror, polished edges, safety backed</td><td>Cutouts for the counter receptacle and the LED switch. Template after the counter is in.</td></tr>
+      <tr><td>Door glass</td><td>20.5 × 38.5 × 0.25</td><td>Tempered clear, or light bronze tint to match the mirror</td><td>Sits in a 1/4 by 3/8 in rabbet behind a 20 by 38 in opening, held with silicone and retaining clips.</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="cost">
+  <h2>Cost summary <small>before tax and shipping</small></h2>
+  <p class="lead">Sourced parts total $1,697.13. With the fabricator and electrical allowances the project lands between $3,700 and $4,800. The counter and mirror are the swing items, and together they cost more than the whole cabinet.</p>
+  <dl class="sum">
+    <div><dt>Sourced parts</dt><dd>$1,697<small>every price read from its page</small></dd></div>
+    <div><dt>Allowances</dt><dd>$2,015 to $3,075<small>estimates, not quotes</small></dd></div>
+    <div><dt>Landed estimate</dt><dd>$3,700 to $4,800<small>before tax</small></dd></div>
+  </dl>
+  <h3>By layer</h3>
+  <div class="cx" role="img" aria-label="Bar chart of cost by layer. Appliance 395 dollars, sheet goods 827, hardware 364 plus about 110 allowance, finishes 111 plus about 45, countertop 700 to 1000, mirror 800 to 1200, door glass 60 to 120, electrical 300 to 600.">
+    <div class="cax"><span></span><div><span>$0</span><span>$500</span><span>$1,000</span><span>$1,500</span></div></div>
+    <div class="crow"><div class="clabel"><strong>Appliance</strong><small>Cooler, sale ends Nov 18; $799 after</small></div><div class="ctrack"><i class="s" style="width:26.3%"></i><b>$395</b></div></div>
+    <div class="crow"><div class="clabel"><strong>Sheet goods and lumber</strong><small>Walnut lumber ships freight, add $40 to $80</small></div><div class="ctrack"><i class="s" style="width:55.2%"></i><b>$827</b></div></div>
+    <div class="crow"><div class="clabel"><strong>Hardware</strong><small>Allowance: locking devices, plates, channel, pins, fasteners, mastic</small></div><div class="ctrack"><i class="s" style="width:24.3%"></i><i class="a" style="width:7.3%"></i><b>$364 + about $110</b></div></div>
+    <div class="crow"><div class="clabel"><strong>Finishes</strong><small>Allowance: primer and drawer-box poly</small></div><div class="ctrack"><i class="s" style="width:7.4%"></i><i class="a" style="width:3%"></i><b>$111 + about $45</b></div></div>
+    <div class="crow"><div class="clabel"><strong>Stone countertop</strong><small>About 8.5 sq ft of 3 cm quartz, fabricated and installed. Get two quotes.</small></div><div class="ctrack"><i class="a" style="width:46.7%"></i><i class="r" style="width:20%"></i><b>$700 to $1,000</b></div></div>
+    <div class="crow"><div class="clabel"><strong>Antiqued mirror</strong><small>About 20 sq ft with two cutouts, glass shop quote</small></div><div class="ctrack"><i class="a" style="width:53.3%"></i><i class="r" style="width:26.7%"></i><b>$800 to $1,200</b></div></div>
+    <div class="crow"><div class="clabel"><strong>Door glass</strong><small>Tempered, 20.5 × 38.5 in</small></div><div class="ctrack"><i class="a" style="width:4%"></i><i class="r" style="width:4%"></i><b>$60 to $120</b></div></div>
+    <div class="crow"><div class="clabel"><strong>Electrical circuit</strong><small>20 A counter circuit, depends on panel distance</small></div><div class="ctrack"><i class="a" style="width:20%"></i><i class="r" style="width:20%"></i><b>$300 to $600</b></div></div>
+    <div class="legend"><span><i class="s"></i>Sourced price</span><span><i class="a"></i>Allowance, low estimate</span><span><i class="r"></i>Range up to high estimate</span></div>
+  </div>
+  <h3>By vendor</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Vendor</th><th>Items</th><th class="n">Subtotal</th></tr></thead>
+    <tbody>
+      <tr><td>Lowe's</td><td>Cooler, 1/4 in birch, poplar, side-mount slides, pulls, shelf brackets, LED kit, black enamel</td><td class="n">$803.21</td></tr>
+      <tr><td>Toledo Plywood or local hardwood yard</td><td>2 sheets 3/4 in walnut plywood</td><td class="n">$353.90</td></tr>
+      <tr><td>Rockler</td><td>Baltic birch, Osmo</td><td class="n">$179.95</td></tr>
+      <tr><td>Home Depot</td><td>3/4 in birch plywood, edge banding, levelers</td><td class="n">$162.11</td></tr>
+      <tr><td>Bell Forest Products</td><td>8/4 walnut</td><td class="n">$128.00</td></tr>
+      <tr><td>CabinetParts</td><td>Blum slides and hinges</td><td class="n">$69.96</td></tr>
+      <tr class="tot"><td colspan="2">Sourced parts total</td><td class="n">$1,697.13</td></tr>
+    </tbody></table></div>
+  <p class="note">Allowances are estimates, not quotes. Every sourced price links to the page it was read from on Nov 13 2026. Re-check before ordering, since the cooler and Blum prices are time-limited sales.</p>
+</section>
+
+<section id="electrical">
+  <h2>Electrical</h2>
+  <p>The espresso machine and kettle together exceed a 15 A circuit and nearly fill a 20 A one. Put the counter receptacle on a dedicated 20 A circuit and plug the cooler into the existing outlet. Check the breaker feeding that outlet before relying on it for anything but the cooler.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Load</th><th class="n">Typical watts</th><th class="n">Amps at 120 V</th><th>Circuit</th></tr></thead>
+    <tbody>
+      <tr><td>Espresso machine</td><td class="n">1,200 to 1,500</td><td class="n">10 to 12.5</td><td>Counter, 20 A dedicated</td></tr>
+      <tr><td>Electric kettle</td><td class="n">1,500</td><td class="n">12.5</td><td>Counter, 20 A dedicated</td></tr>
+      <tr><td>Grinder</td><td class="n">150 to 300</td><td class="n">1.3 to 2.5</td><td>Counter</td></tr>
+      <tr><td>TCL cooler</td><td class="n">100 to 150 running</td><td class="n">1.3</td><td>Existing outlet</td></tr>
+      <tr><td>LED strips and driver</td><td class="n">30</td><td class="n">0.3</td><td>Existing outlet or counter</td></tr>
+    </tbody></table></div>
+  <p class="note">Running the kettle while pulling a shot draws up to 25 A, which trips even a 20 A breaker. Accept that habit or split them onto two circuits.</p>
+  <h3>Placement</h3>
+  <p class="note" style="margin-top:0">Measured from the floor and from the left end of the unit.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Device</th><th class="n">Height in</th><th class="n">From left in</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Counter duplex receptacle, 20 A</td><td class="n">42</td><td class="n">38</td><td>Centered behind the espresso station, cutout in the mirror</td></tr>
+      <tr><td>Cooler receptacle</td><td class="n">6</td><td class="n">12</td><td>Inside the cooler bay on the wall, behind the cooler. Cord exits rear bottom.</td></tr>
+      <tr><td>LED driver</td><td class="n">inside upper top</td><td class="n">12</td><td>Plug-in driver on a switched or always-on receptacle. Fish low-voltage wire down to the floating shelves.</td></tr>
+      <tr><td>Dimmer or touch switch</td><td class="n">42</td><td class="n">46</td><td>Under the right end of the counter, or an in-line touch dimmer on the LED run</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="assembly">
+  <h2>Assembly sequence <small>shop build</small> <span class="prog" data-count-for="assembly"></span></h2>
+  <p>Build the base and upper as two boxes in the shop, fit the fronts, then take everything apart only as far as needed to carry it in.</p>
+  <ol class="check">
+    <li><label><input type="checkbox" data-key="a1" data-list="assembly"><span>Break down sheets. Rip the walnut sheets to 24 in strips for the base sides and partition first, then crosscut. Cut the three fronts from one blank as a grain-matched set and label them.</span></label></li>
+    <li><label><input type="checkbox" data-key="a2" data-list="assembly"><span>Edge band every front edge of the carcass parts and all four edges of the fronts. Trim flush and ease the corners.</span></label></li>
+    <li><label><input type="checkbox" data-key="a3" data-list="assembly"><span>Drill the partition and right side for shelf pins only if you want an adjustable shelf behind the door. Drill the hinge cup holes in the door front and the system holes for the slide brackets now, while the parts are flat.</span></label></li>
+    <li><label><input type="checkbox" data-key="a4" data-list="assembly"><span>Assemble the right bay. Pocket screw the bottom and sub-top between the partition and right side, square it against the back, and nail on the 1/4 in back. Add the four levelers.</span></label></li>
+    <li><label><input type="checkbox" data-key="a5" data-list="assembly"><span>Add the left side. Attach the two cooler bay stretchers between the left side and partition, flush with the top and pocket screwed from inside the bay where the cooler will hide them.</span></label></li>
+    <li><label><input type="checkbox" data-key="a6" data-list="assembly"><span>Attach the toe kick to the right bay, set back 3 in.</span></label></li>
+    <li><label><input type="checkbox" data-key="a7" data-list="assembly"><span>Build the drawer boxes and roll-out tray. Glue and brad the sides to the fronts and backs with the bottoms in grooves. Check each against the slide maker's width and notch drawings.</span></label></li>
+    <li><label><input type="checkbox" data-key="a8" data-list="assembly"><span>Mount the undermount slides to the right bay and partition, the side-mount slides to the tray, and hang the boxes.</span></label></li>
+    <li><label><input type="checkbox" data-key="a9" data-list="assembly"><span>Fit the fronts. Hang the door on its hinges, then set the two drawer fronts with 1/8 in reveals using double-sided tape, drill through from inside the box, and screw. Drill for pulls last.</span></label></li>
+    <li><label><input type="checkbox" data-key="a10" data-list="assembly"><span>Build the upper. Pocket screw the top and bottom between the sides, square it, nail on the back, and drill shelf pin holes on 32 mm spacing. Rip the French cleat and screw one half to the cabinet back, 2 in below the top.</span></label></li>
+    <li><label><input type="checkbox" data-key="a11" data-list="assembly"><span>Make the upper door. Join the stiles and rails, rabbet the back for glass, prime and paint, then set the glass in silicone with clips after the paint cures. Hang on three hinges.</span></label></li>
+    <li><label><input type="checkbox" data-key="a12" data-list="assembly"><span>Glue up and dimension the floating shelves, drill the three bracket holes in each back edge, and finish them.</span></label></li>
+    <li><label><input type="checkbox" data-key="a13" data-list="assembly"><span>Finish everything before install. See Finishing below.</span></label></li>
+  </ol>
+</section>
+
+<section id="install">
+  <h2>Installation sequence <small>on site</small> <span class="prog" data-count-for="install"></span></h2>
+  <p>Electrical goes in first. The counter is templated on the set base, and the mirror goes up after the counter and before the upper cabinet.</p>
+  <ol class="check">
+    <li><label><input type="checkbox" data-key="i1" data-list="install"><span>Rough electrical. Add the 20 A counter circuit and box at 42 in, relocate or verify the cooler receptacle at 6 in inside the cooler bay, and bring low-voltage LED wire to the upper cabinet location and to the two floating shelf bracket positions. Patch and paint.</span></label></li>
+    <li><label><input type="checkbox" data-key="i2" data-list="install"><span>Mark the wall. Snap a level line at 34.5 in for the carcass top, locate the studs, and mark the upper cabinet cleat line at 92 in to the top of the wall cleat.</span></label></li>
+    <li><label><input type="checkbox" data-key="i3" data-list="install"><span>Set the base. Slide it in, level it front to back and side to side on the levelers, shim the left side and partition, and screw the rear stretcher and right bay back rail into two studs with 3 in screws.</span></label></li>
+    <li><label><input type="checkbox" data-key="i4" data-list="install"><span>Template the counter. Have the fabricator template with the base set and the cooler bay empty. Allow 7 to 10 days.</span></label></li>
+    <li><label><input type="checkbox" data-key="i5" data-list="install"><span>Set the counter. The fabricator sets it on a bead of silicone on the sub-top, partition, left side and stretchers.</span></label></li>
+    <li><label><input type="checkbox" data-key="i6" data-list="install"><span>Hang the floating shelf brackets. Lag each plate into two studs at 60 in and 72 in to the top of the shelf, centered over the right bay, and slide the shelves on dry to check level before adding adhesive to the rods.</span></label></li>
+    <li><label><input type="checkbox" data-key="i7" data-list="install"><span>Template and install the mirror. The glass shop templates around the receptacle, shelf brackets and the LED switch, then sets the mirror in mastic on the painted wall. Allow a week.</span></label></li>
+    <li><label><input type="checkbox" data-key="i8" data-list="install"><span>Hang the upper cabinet. Screw the wall half of the cleat into studs through the mirror cutout or just above the mirror line at 92 in, lift the cabinet onto it, and add two screws through the cabinet back low down into studs. Hang the glass door and adjust reveals.</span></label></li>
+    <li><label><input type="checkbox" data-key="i9" data-list="install"><span>Run the LEDs. Mount the channels under the upper cabinet and both floating shelves, connect to the driver in the upper cabinet, and test the dimmer.</span></label></li>
+    <li><label><input type="checkbox" data-key="i10" data-list="install"><span>Slide in the cooler. Plug it in, push it back until the doors are flush with the drawer fronts, level its feet, and confirm the toe grille is clear. Let it run 24 hours before loading.</span></label></li>
+    <li><label><input type="checkbox" data-key="i11" data-list="install"><span>Install pulls, load the drawers, and set the appliances. Check that the espresso machine's hopper lid clears the lower shelf.</span></label></li>
+    <li><label><input type="checkbox" data-key="i12" data-list="install"><span>Walk the reveals and touch up paint and finish.</span></label></li>
+  </ol>
+</section>
+
+<section id="finishing">
+  <h2>Finishing</h2>
+  <p>Walnut gets a clear hardwax oil. The upper cabinet and its door are sprayed or brushed satin black. Finish flat parts in the shop before assembly where possible. It is faster and gives a better surface than finishing a standing cabinet.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Surface</th><th>Finish</th><th>Coats</th><th class="n">Price</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Walnut ply carcass, fronts, shelves</td><td><a href="https://www.rockler.com/osmo-polyx-oil-clear-satin-3043-0-75l">Osmo Polyx-Oil 3043 Clear Satin, 0.75 L</a></td><td>2</td><td class="n">$57.99</td><td>258 sq ft per liter per coat, so one can covers both coats on about 95 sq ft. Buy two if you finish carcass interiors.</td></tr>
+      <tr><td>Solid walnut floating shelves</td><td>Same Osmo</td><td>2 to 3</td><td class="n">included</td><td>Finish all six faces to limit cupping.</td></tr>
+      <tr><td>Upper cabinet and door frame</td><td><a href="https://www.lowes.com/pd/Evolution-Paint-Cabinet-Furniture-Door-Trim-Paint-Satin-Bohld-Black-Satin-Tintable-Cabinet-and-Furniture-Paint-Enamel-1-quart/5014916999">Evolution Paint Satin Bohld Black, 1 quart</a>, over shellac-based primer</td><td>1 primer, 2 top</td><td class="n">$52.62 + primer, about $20</td><td>Fill birch edge banding seams before priming. Satin matches the photo's soft black.</td></tr>
+      <tr><td>Drawer boxes and tray</td><td>Waterborne satin poly</td><td>2</td><td class="n">about $25</td><td>Inside and out, before mounting slides.</td></tr>
+      <tr><td>Poplar door rabbet</td><td>Painted with the frame</td><td></td><td class="n">included</td><td>Glass goes in after full cure.</td></tr>
+      <tr class="tot"><td colspan="3">Finishes subtotal, priced items</td><td class="n">$110.61</td><td>Checked Nov 13 2026</td></tr>
+    </tbody></table></div>
+</section>
+
+</div></main>
+
+<footer class="gut"><div class="wrap">Source of record: the Fusion design <code>Coffee and Bar Cabinet 48in</code>. Prices and stock were read from each linked page on Nov 13 2026 and change. The TCL cooler and Blum slide prices are time-limited sales.</div></footer>
+
+<script>
+(function(){
+  var store=null;try{store=window.localStorage}catch(e){}
+  function get(k){try{return store?store.getItem(k):null}catch(e){return null}}
+  function put(k,v){try{if(store)store.setItem(k,v)}catch(e){}}
+  var boxes=document.querySelectorAll('input[type=checkbox][data-key]');
+  function counts(){
+    document.querySelectorAll('[data-count-for]').forEach(function(el){
+      var g=el.getAttribute('data-count-for'),all=document.querySelectorAll('input[data-list="'+g+'"]'),n=0;
+      all.forEach(function(b){if(b.checked)n++});
+      el.textContent=n+' of '+all.length+' done';
+    });
+  }
+  boxes.forEach(function(b){
+    var k='coffeebar:'+b.getAttribute('data-key');
+    if(get(k)==='1')b.checked=true;
+    b.addEventListener('change',function(){put(k,b.checked?'1':'0');counts()});
+  });
+  counts();
+
+  var chips=document.querySelectorAll('[data-filter]'),rows=document.querySelectorAll('#cut tbody tr');
+  chips.forEach(function(c){
+    c.addEventListener('click',function(){
+      var f=c.getAttribute('data-filter');
+      chips.forEach(function(o){o.setAttribute('aria-pressed',o===c?'true':'false')});
+      rows.forEach(function(r){r.hidden=!(f==='all'||r.getAttribute('data-part')===f)});
+    });
+  });
+
+  var copyBtn=document.getElementById('copy'),status=document.getElementById('copied');
+  function listText(){
+    var out=[];
+    function take(sel,qi,ni,li){
+      document.querySelectorAll(sel).forEach(function(r){
+        if(r.className.indexOf('tot')>-1)return;
+        var c=r.cells,a=r.querySelector('a[href]');
+        out.push(c[qi].textContent.trim()+' x '+c[ni].textContent.trim()+(a?' | '+a.href:''));
+      });
+    }
+    out.push('Materials');take('#mat tbody tr',1,0);
+    out.push('');out.push('Hardware');take('#hw tbody tr',1,0);
+    return out.join('\n');
+  }
+  function fallback(t){
+    var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();var ok=false;
+    try{ok=document.execCommand('copy')}catch(e){}
+    document.body.removeChild(ta);return ok;
+  }
+  if(copyBtn)copyBtn.addEventListener('click',function(){
+    var t=listText();
+    function done(ok){status.textContent=ok?'Copied':'Copy failed, select the table instead';setTimeout(function(){status.textContent=''},2500)}
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){done(true)},function(){done(fallback(t))});
+    }else done(fallback(t));
+  });
+
+  if('IntersectionObserver' in window){
+    var links={};
+    document.querySelectorAll('nav.strip a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting)return;
+        Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current')});
+        var l=links[e.target.id];if(l)l.setAttribute('aria-current','true');
+      });
+    },{rootMargin:'-15% 0px -75% 0px'});
+    document.querySelectorAll('main section[id]').forEach(function(s){io.observe(s)});
+  }
+})();
+</script>
+
+</body></html>
